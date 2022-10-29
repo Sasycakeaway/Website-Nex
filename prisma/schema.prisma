@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DBURL")
+}
+
+model Utente {
+  PK_Email  String   @unique
+  Password  String
+  Timestamp DateTime @default(now())
+  News      Boolean
+  CF        String
+  Nascita   String
+  Telefono  String
+  Ordini    Ordini[]
+  Newsletter Newsletter[]
+  RecoveryPassword RecoveryPassword[]
+}
+
+model Ordini {
+  User     Utente @relation(fields: [FK_Email], references: [PK_Email])
+  FK_Email String @unique
+  PK_Id String @id @default(uuid())
+  Totale Int 
+  Cart String
+  Timestamp DateTime @default(now())
+  Nome String
+  Cognome String
+  Indirizzo String
+  Cap String
+  Domicilio String
+}
+
+model Newsletter{
+  User     Utente @relation(fields: [FK_Email], references: [PK_Email])
+  PK_Token String @id @unique
+  FK_Email String 
+}
+
+model RecoveryPassword{
+  User     Utente @relation(fields: [FK_Email], references: [PK_Email])
+  UUID String @id @unique
+  FK_Email String
+}
+
