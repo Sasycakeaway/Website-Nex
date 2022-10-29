@@ -25,7 +25,7 @@ model Utente {
 
 model Ordini {
   User     Utente @relation(fields: [FK_Email], references: [PK_Email])
-  FK_Email String @unique
+  FK_Email String
   PK_Id String @id @default(uuid())
   Totale Int 
   Cart String

@@ -1,6 +1,6 @@
 <script>
 	import { dialogs } from "svelte-dialogs";
-	
+	import emailjs from '@emailjs/browser';
 	import { onMount } from 'svelte';
 	import Fa from 'svelte-fa/src/fa.svelte';
 	import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons/index.js';
@@ -15,7 +15,11 @@
 
 	onMount(() => {
     if(form?.success && form != null){
-      dialogs.alert("Account registrato correttamente").then(() => window.open("/ecommerce/login"));
+		emailjs.init('tfSXJVz0VLhWR2I_5');
+		emailjs.send("service_s11ial4", "template_4x1knko", {
+            email: form.email,
+            newsremove: form.newsremove,
+        }).then(() => dialogs.alert("Account registrato correttamente").then(() => location.href = "/ecommerce/login"));
     }else if(form != null){
       dialogs.alert("Errore durante la creazione dell'account, " + form.message);
     }

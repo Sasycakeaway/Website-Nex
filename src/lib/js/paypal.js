@@ -39,10 +39,10 @@ function putorder(
     redirect: "follow",
   };
 
-  fetch("/api/addorder", requestOptions)
+  fetch("/pagamenti?/compra", requestOptions)
     .then((response) => response.text())
     .then(async (result) => {
-      if (result == "1") {
+      if (result.data.success == true) {
         try {
           await emailjs.send("service_ccwtjlr", "template_cavi0no", {
             id: id,
