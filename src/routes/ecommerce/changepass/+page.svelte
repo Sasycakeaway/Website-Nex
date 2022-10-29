@@ -1,47 +1,15 @@
 <script>
-  import { dialogs } from "svelte-dialogs";
-  import { v4 as uuidv4 } from "uuid";
   import { onMount } from "svelte";
-  import emailjs from "@emailjs/browser";
-  import md5 from "md5";
-  let email, pass, passcheck, uuid;
-  function requestRestore() {
-    if (pass == passcheck && pass != null && uuid != null) {
-      var myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+  import { dialogs } from 'svelte-dialogs';
 
-      var urlencoded = new URLSearchParams();
-      urlencoded.append("email", email);
-      urlencoded.append("password", md5(pass));
-      urlencoded.append("uuid", uuid);
-
-      var requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        body: urlencoded,
-        redirect: "follow",
-      };
-
-      fetch("/api/changepass", requestOptions)
-        .then((response) => response.text())
-        .then((result) => {
-          if (result == "1") {
-            dialogs.alert("Password cambiata con successo");
-          } else {
-            dialogs.alert("Richiesta scaduta");
-          }
-        })
-        .catch((error) => {
-          dialogs.alert("Errore durante la creazione della richiesta");
-        });
-    } else {
-      dialogs.alert(
-        "Le password non corrispondono oppure alcuni campi sono mancanti"
-      );
-    }
-  }
+	/** @type {import('./$types').ActionData} */
+	export let form;
   onMount(() => {
-    emailjs.init("tfSXJVz0VLhWR2I_5");
+    if(form?.success && form != null){
+      dialogs.alert("Account registrato correttamente").then(() => location.href = "/ecommerce/login");
+    }else if(form != null){
+      dialogs.alert("Errore durante la creazione dell'account, " + form.message);
+    }
     if (
       /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
         navigator.userAgent
@@ -72,7 +40,7 @@
         class="uk-input"
         type="text"
         placeholder="Username"
-        bind:value={email}
+        name="email"
       />
     </div>
     <div class="uk-margin">
@@ -83,7 +51,7 @@
         class="uk-input"
         type="password"
         placeholder="Password"
-        bind:value={pass}
+        name="pass"
       />
     </div>
     <div class="uk-margin">
@@ -94,7 +62,7 @@
         class="uk-input"
         type="password"
         placeholder="Password"
-        bind:value={passcheck}
+        name="passcheck"
       />
     </div>
     <div class="uk-margin">
@@ -105,12 +73,12 @@
         class="uk-input"
         type="text"
         placeholder="Codice identificativo"
-        bind:value={uuid}
+        name="uuid"
       />
     </div>
     <div class="uk-margin">
       <center>
-        <button class="uk-button uk-button-primary" on:click={requestRestore}
+        <button class="uk-button uk-button-primary"
           >Ripristina</button
         >
       </center>
