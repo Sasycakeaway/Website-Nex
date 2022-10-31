@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `Ordini` MODIFY `Cart` LONGTEXT NOT NULL;

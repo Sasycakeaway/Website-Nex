@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,41 +8,45 @@ datasource db {
 }
 
 model Utente {
-  PK_Email  String   @unique
-  Password  String
-  Timestamp DateTime @default(now())
-  News      Boolean
-  CF        String
-  Nascita   String
-  Telefono  String
-  Ordini    Ordini[]
-  Newsletter Newsletter[]
+  PK_Email         String             @id
+  Password         String
+  Timestamp        DateTime           @default(now())
+  News             Boolean
+  CF               String
+  Nascita          String
+  Telefono         String
+  Newsletter       Newsletter[]
   RecoveryPassword RecoveryPassword[]
+  Ordini    Ordini[]
+
 }
 
 model Ordini {
   User     Utente @relation(fields: [FK_Email], references: [PK_Email])
-  FK_Email String
-  PK_Id String @id @default(uuid())
-  Totale Int 
-  Cart String
+  FK_Email  String
+  PK_Id     String   @id @default(uuid())
+  Totale    Int
+  Cart      String  @db.LongText
   Timestamp DateTime @default(now())
-  Nome String
-  Cognome String
+  Nome      String
+  Cognome   String
   Indirizzo String
-  Cap String
-  Domicilio String
+  Cap       String
+  Domicilio Boolean
 }
 
-model Newsletter{
-  User     Utente @relation(fields: [FK_Email], references: [PK_Email])
+model Newsletter {
   PK_Token String @id @unique
-  FK_Email String 
-}
-
-model RecoveryPassword{
-  User     Utente @relation(fields: [FK_Email], references: [PK_Email])
-  UUID String @id @unique
   FK_Email String
+  User     Utente @relation(fields: [FK_Email], references: [PK_Email])
+
+  @@index([FK_Email], map: "Newsletter_FK_Email_fkey")
 }
 
+model RecoveryPassword {
+  UUID     String @id @unique
+  FK_Email String
+  User     Utente @relation(fields: [FK_Email], references: [PK_Email])
+
+  @@index([FK_Email], map: "RecoveryPassword_FK_Email_fkey")
+}

@@ -187,7 +187,7 @@
 							<div class="col">
 								{#if prod.id != 'Il trasformista'}
 									<img
-										src={'/images/' + prod.id + '.jpg'}
+										src={prod.image}
 										alt="Foto del prodotto"
 										class="imgcart"
 									/>

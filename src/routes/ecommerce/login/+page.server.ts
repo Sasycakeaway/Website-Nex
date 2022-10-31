@@ -47,7 +47,7 @@ export const actions = {
 		if (user == null) {
 			return { success: false, message: '' };
 		} else {
-			cookies.set('user', email, {
+			cookies.set('email', email, {
 				// send cookie for every page
 				path: '/',
 				// server side only cookie so you can't use `document.cookie`

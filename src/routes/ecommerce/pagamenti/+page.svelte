@@ -1,36 +1,31 @@
-<script>
-	import { dialogs } from 'svelte-dialogs';
-	import md5 from 'md5';
-	import { init, getorder, getvariable } from '$lib/js/paypal';
+<script lang="ts">
+	import { init } from '$lib/js/paypal';
 	import { onMount } from 'svelte';
 	import { GooglePlacesAutocomplete } from '@beyonk/svelte-googlemaps';
 	//import google from 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBomQdV10KKTb45y-uIXWl-ZlFgyEOxcsc&libraries=places&callback=initMap'
-	let nome,
-		cognome,
-		indirizzo,
-		cap,
+	let nome: string,
+		cognome: string,
+		indirizzo: string,
+		cap: string,
 		domicilio = false,
-		totale,
-		user,
-		pass,
-		cart,
-		cittavar;
+		totale: string | null,
+		cart: string | null,
+		cittavar: string,
+		email: string;
+
+	/** @type {import('./$types').PageData} */
+	export let data;
+
 	onMount(async () => {
-		user = sessionStorage.getItem('email');
+		email = data.email;
 		totale = localStorage.getItem('totale');
-		pass = sessionStorage.getItem('password');
 		cart = localStorage.getItem('cart');
-		if (user == null || pass == null) {
-			dialogs.alert('Per completare il pagamento devi accedere al sito').then(() => {
-				location.href = '/ecommerce/login';
-			});
-		}
 	});
+
 	function pagamento() {
-		if (nome != null && cognome != null && indirizzo != null && cap != null) {
+		if (nome != null && cognome != null && indirizzo != null && cap != null && cittavar != null) {
 			indirizzo = cittavar + ',' + indirizzo;
-			console.log(domicilio.toString());
-			init(totale, nome, cognome, indirizzo, cap, domicilio.toString(), user, pass, cart);
+			init(totale, nome, cognome, indirizzo, cap, domicilio, email, cart, cittavar);
 			document.getElementById('conf').style.visibility = 'hidden';
 		} else alert('Compila tutti i campi richiesti');
 	}
@@ -41,7 +36,6 @@
 </script>
 
 <svelte:head>
-	<!-- <script src="https://staging.online.satispay.com/web-button.js"></script> -->
 	<script
 		src="https://www.paypal.com/sdk/js?client-id=AXG9tYzRz10-7z2Hhro6tScAENTIHDtqWdFL9gqCx2hcH8-VqKG6gs1n3yMZzge6UvLVECsfdtezoLTk&currency=EUR"
 		data-namespace="paypal_sdk"
@@ -51,15 +45,15 @@
 <br />
 <br />
 <div align="center" class="form">
-	<fieldset class="uk-fieldset">
+	<form class="uk-fieldset" method="POST" action="?/compra">
 		<legend class="uk-legend">Modulo di pagamento</legend>
 
 		<div class="uk-margin">
-			<input class="uk-input" type="text" placeholder="Nome" bind:value={nome} />
+			<input class="uk-input" type="text" placeholder="Nome" name="nome" bind:value={nome}/>
 			<br />
 			<br />
 
-			<input class="uk-input" type="text" placeholder="Cognome" bind:value={cognome} />
+			<input class="uk-input" type="text" placeholder="Cognome" name="cognome" bind:value={cognome}/>
 			<br />
 			<br />
 			<GooglePlacesAutocomplete
@@ -74,24 +68,24 @@
 				class="uk-input"
 				type="input"
 				placeholder="Indirizzo di consegna"
-				bind:value={indirizzo}
 				id="map"
+				name="indirizzo"
+				bind:value={indirizzo}
 			/>
 			<br />
 			<br />
-			<input class="uk-input" type="text" placeholder="CAP" bind:value={cap} />
+			<input class="uk-input" type="text" placeholder="CAP" name="cap" bind:value={cap}/>
 			<br />
 			<br />
-			<input type="checkbox" id="domicilio" name="domicilio" bind:checked={domicilio} />
+			<input type="checkbox" id="domicilio" name="domicilio" bind:checked={domicilio}/>
 			<label for="domicilio"
 				>Consegna a domicilio o spedizione se l'indirizzo di consegna è fuori dal Piemonte</label
 			>
-
 			<br />
 			<br />
 		</div>
 		<div align="center" />
-	</fieldset>
+	</form>
 </div>
 <div align="center" id="conf">
 	<button class="uk-button uk-button-primary" on:click={pagamento}>Procedi al pagamento</button>

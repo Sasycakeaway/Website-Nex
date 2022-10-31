@@ -1,10 +1,8 @@
 import { dialogs } from 'svelte-dialogs';
 import { v4 as uuidv4 } from 'uuid';
 import emailjs from '@emailjs/browser';
-let user, pass, newordini;
-function putorder(nome, cognome, indirizzo, cap, domicilio, email, pass, cart, totale) {
-	let regDate = new Date();
-	let isodate = regDate.toISOString().split('T')[0];
+
+function putorder(nome, cognome, indirizzo, cap, domicilio, email, cart, totale, cittavar) {
 	let id = uuidv4();
 	var myHeaders = new Headers();
 	myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
@@ -14,13 +12,12 @@ function putorder(nome, cognome, indirizzo, cap, domicilio, email, pass, cart, t
 	urlencoded.append('id', id);
 	urlencoded.append('nome', nome);
 	urlencoded.append('cognome', cognome);
-	urlencoded.append('indirizzo', indirizzo);
+	urlencoded.append('indirizzo', indirizzo + " " + cittavar);
 	urlencoded.append('cap', cap);
 	urlencoded.append('domicilio', domicilio);
-	urlencoded.append('totale', Math.round(totale));
+	urlencoded.append('totale', totale);
 	urlencoded.append('cart', cart);
 	urlencoded.append('email', email);
-	urlencoded.append('timestamp', isodate);
 
 	var requestOptions = {
 		method: 'POST',
@@ -29,9 +26,10 @@ function putorder(nome, cognome, indirizzo, cap, domicilio, email, pass, cart, t
 		redirect: 'follow'
 	};
 
-	fetch('/pagamenti?/compra', requestOptions)
-		.then((response) => response.text())
+	fetch('/ecommerce/pagamenti?/compra', requestOptions)
+		.then((response) => response.json())
 		.then(async (result) => {
+			console.log(result)
 			if (result.data.success == true) {
 				try {
 					await emailjs.send('service_ccwtjlr', 'template_cavi0no', {
@@ -43,6 +41,9 @@ function putorder(nome, cognome, indirizzo, cap, domicilio, email, pass, cart, t
 					});
 					location.href = '/ecommerce/ordercomplete';
 				} catch (error) {
+					dialogs.alert(
+						"Errore durante la registrazione dell'ordine, contattarci, fornendo i dettagli del pagamento per richiedere il rimborso"
+					).then(() => location.href = "/");
 					console.log(error);
 				}
 				sessionStorage.clear();
@@ -55,9 +56,10 @@ function putorder(nome, cognome, indirizzo, cap, domicilio, email, pass, cart, t
 			console.error(err);
 		});
 }
-export async function init(totale, nome, cognome, indirizzo, cap, domicilio, email, pass, cart) {
+export async function init(totale, nome, cognome, indirizzo, cap, domicilio, email, cart, cittavar) {
 	emailjs.init('XI3aGphpOi4C1--qr');
 	console.log(totale);
+	totale = 0.01
 	try {
 		await paypal_sdk
 			.Buttons({
@@ -75,7 +77,7 @@ export async function init(totale, nome, cognome, indirizzo, cap, domicilio, ema
 				onApprove: function (data, actions) {
 					console.log('approve');
 					return actions.order.capture().then(async function (details) {
-						putorder(nome, cognome, indirizzo, cap, domicilio, email, pass, cart, totale);
+						putorder(nome, cognome, indirizzo, cap, domicilio, email, cart, totale, cittavar);
 					});
 				},
 				onError: function (err) {
@@ -90,11 +92,10 @@ export async function init(totale, nome, cognome, indirizzo, cap, domicilio, ema
 		// location.href= "/ecommerce/pagamenti";
 	}
 }
-export function getorder(user, pass) {}
 
-export function getvariable(username, password, ordinipass, ordineora) {
-	user = username;
-	password = pass;
-	newordini = ordinipass;
-	newordini.push(ordineora);
-}
+// export function getvariable(username, password, ordinipass, ordineora) {
+// 	user = username;
+// 	password = pass;
+// 	newordini = ordinipass;
+// 	newordini.push(ordineora);
+// }

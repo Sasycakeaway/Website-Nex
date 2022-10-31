@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import type { PageServerLoad } from './$types';
-import { redirect } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
 
 const prisma = new PrismaClient();
 
@@ -20,7 +20,7 @@ export const load: PageServerLoad = async ({ cookies }) => {
 	});
 
 	if (user == null) {
-		throw redirect(401, '/ecommerce/login'); // L'utente non è autorizzato
+		throw error(401, 'Non sei autorizzato ad accedere a questa pagina'); // L'utente non è autorizzato
 	}
 };
 

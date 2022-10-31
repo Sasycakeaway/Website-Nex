@@ -8,7 +8,7 @@ CREATE TABLE `Utente` (
     `Nascita` VARCHAR(191) NOT NULL,
     `Telefono` VARCHAR(191) NOT NULL,
 
-    UNIQUE INDEX `Utente_PK_Email_key`(`PK_Email`)
+    PRIMARY KEY (`PK_Email`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
@@ -22,9 +22,8 @@ CREATE TABLE `Ordini` (
     `Cognome` VARCHAR(191) NOT NULL,
     `Indirizzo` VARCHAR(191) NOT NULL,
     `Cap` VARCHAR(191) NOT NULL,
-    `Domicilio` VARCHAR(191) NOT NULL,
+    `Domicilio` BOOLEAN NOT NULL,
 
-    UNIQUE INDEX `Ordini_FK_Email_key`(`FK_Email`),
     PRIMARY KEY (`PK_Id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -34,6 +33,7 @@ CREATE TABLE `Newsletter` (
     `FK_Email` VARCHAR(191) NOT NULL,
 
     UNIQUE INDEX `Newsletter_PK_Token_key`(`PK_Token`),
+    INDEX `Newsletter_FK_Email_fkey`(`FK_Email`),
     PRIMARY KEY (`PK_Token`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -43,6 +43,7 @@ CREATE TABLE `RecoveryPassword` (
     `FK_Email` VARCHAR(191) NOT NULL,
 
     UNIQUE INDEX `RecoveryPassword_UUID_key`(`UUID`),
+    INDEX `RecoveryPassword_FK_Email_fkey`(`FK_Email`),
     PRIMARY KEY (`UUID`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 

@@ -1,5 +1,5 @@
 <script>
-	import Carousel from '$$lib/components/duisag.svelte;
+	import Carousel from '$lib/components/carousel.svelte';
 	import Head from '$lib/components/head.svelte';
 	import Prod from '$lib/components/prod.svelte';
 </script>

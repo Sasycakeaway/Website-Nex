@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE `Ordini` MODIFY `Cart` VARCHAR(191) NOT NULL;

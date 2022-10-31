@@ -11,7 +11,7 @@ export function initcart() {
 	return cart;
 }
 
-export function pusha(ida, qty, prezzo) {
+export function pusha(ida, qty, prezzo, image) {
 	let count = 0;
 	for (var i = 0; i < cart.length; i++) {
 		if (cart[i].id == ida) {
@@ -20,7 +20,7 @@ export function pusha(ida, qty, prezzo) {
 		}
 	}
 	if (count == 0) {
-		cart.push({ id: ida, qty: qty, prezzo: prezzo * qty });
+		cart.push({ id: ida, qty: qty, prezzo: prezzo * qty, image: image });
 	}
 	totale += prezzo * qty;
 	totstore.set(totale);

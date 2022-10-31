@@ -131,7 +131,7 @@
 			<button
 				class="uk-button uk-button-primary carbut"
 				id={name}
-				on:click={() => biscotti({ name })}>Aggiungi al carrello</button
+				on:click={() => biscotti(name, image)}>Aggiungi al carrello</button
 			>
 			<br />
 			<div class="testo">
