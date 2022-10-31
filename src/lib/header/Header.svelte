@@ -87,27 +87,23 @@
 						<li class="uk-parent">
 							<ul uk-accordion>
 								<li>
-									<a class="uk-accordion-title" href="#0" style="color:black;">I miei prodotti</a>
-									<div class="uk-accordion-content">
-										<ul class="uk-nav-sub">
-											<li><a href="/fresca">Pasticceria fresca</a></li>
-											<!-- <li><a href="#">Pasticceria salata</a></li> -->
-											<li><a href="/biscotti">Biscotti</a></li>
-											<li><a href="/torte">Torte</a></li>
-											<li><a href="/torte/american/">American cakes</a></li>
-											<li><a href="/Dolci_Regionali">Dolci tradizionali</a></li>
-											<li><a href="/lievitati">Panettoni e colombe</a></li>
-											<li><a href="/decorati">Biscotti decorati</a></li>
-											<!-- <li><a href="#">Dolci artistici</a></li> -->
+									<a href="#">I miei prodotti</a>
+									<div class="uk-navbar-dropdown but">
+										<ul class="uk-nav uk-navbar-dropdown-nav">
 											<li><a href="/apebox">Apebox</a></li>
-											<li><a href="/sacco_di_natale">Sacco di natale</a></li>
-											<li><a href="/praline">Praline d'autore</a></li>
-											<li><a href="/uovo">Uovo di pasqua</a></li>
+											<li><a href="/decorati">Biscotti decorati</a></li>
+											{#each types as type}
+												<li>
+													<a
+														href={'/prodotti?prod=' + type.type}
+														on:click={() => (location.href = '/prodotti?prod=' + type.type)}
+														>{type.name}</a
+													>
+												</li>
+											{/each}
 										</ul>
 									</div>
 								</li>
-							</ul>
-						</li>
 						<li><a href="/gallery">Galleria fotografica</a></li>
 						<li><a href="/contatti">Contatti</a></li>
 						<li><a href="/ingredienti">Elenco ingredienti</a></li>
