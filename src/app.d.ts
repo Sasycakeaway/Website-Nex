@@ -71,3 +71,10 @@ declare interface Header_Info {
 	title: string;
 	subtitle: string;
 }
+
+declare interface Register_Response{
+	success: boolean;
+    message: string;
+	email: string;
+	newsremove: string;
+}

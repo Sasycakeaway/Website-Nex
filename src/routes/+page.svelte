@@ -3,6 +3,25 @@
 	import Prod from '$lib/components/prod.svelte';
 	import SvelteSeo from 'svelte-seo';
 	import { onMount } from 'svelte';
+	import GdprBanner from '$lib/components/Cookies_Banner/Banner.svelte';
+
+	let choices = {
+		necessary: {
+			label: "Cookies dell'e-commerce",
+			description: "Usiamo questi cookies per l'utilizzo dell'e-commerce, rimaranno sul tuo PC e noi non potremo vederli.",
+			value: true
+		},
+		tracking: {
+			label: "Google cookies",
+			description: "Sono i cookies utilizzati da Youtube e Maps, non dipendono da noi in nessun modo.",
+			value: true
+		},
+		marketing: {
+			label: "Paypal cookies",
+			description: "Se deciderai di acquistare con PayPal, verranno salvati dei cookies dipendenti da PayPal.",
+			value: true
+		}
+  	};
 	let mobile = false;
 	onMount(async () => {
 		if (/Android|webOS|iPhone|iPad|iPod|Opera Mini/i.test(navigator.userAgent)) {
@@ -72,6 +91,8 @@
 	}}
 />
 <Head {mobile} />
+<GdprBanner cookieName="Login" description="Accetti l'utilizzo di cookies per l'utilizzo dell'e-commerce?" heading="Utilizzo cookies" choices={choices}/>
+
 <br />
 <div class="prodi">
 	<Prod />

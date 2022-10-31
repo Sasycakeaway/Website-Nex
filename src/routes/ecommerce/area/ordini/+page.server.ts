@@ -28,6 +28,6 @@ export const load: PageServerLoad = async ({ cookies }) => {
 			FK_Email: email
 		}
 	});
-	console.log(orders);
+
 	return { ordini: orders };
 };

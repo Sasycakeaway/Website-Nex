@@ -1,25 +1,26 @@
-<script>
+<script lang="ts">
 	import { dialogs } from 'svelte-dialogs';
 	import emailjs from '@emailjs/browser';
 	import { onMount } from 'svelte';
 	import Fa from 'svelte-fa/src/fa.svelte';
 	import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons/index.js';
+	import { Circle2 } from 'svelte-loading-spinners';
 
 	/** @type {import('./$types').ActionData} */
-	export let form;
+	export let form: Register_Response;
 
-	let buttonpress = false;
-	var show = false,
-		showcheck = false,
-		privacy = false;
+	var show = false, showcheck = false;
+
+	let loading: boolean = true;
 
 	onMount(() => {
-		if (form?.success && form != null) {
+		if (form.success && form != null) {
 			emailjs.init('tfSXJVz0VLhWR2I_5');
 			emailjs
 				.send('service_s11ial4', 'template_4x1knko', {
 					email: form.email,
-					newsremove: form.newsremove
+					newsremove: "Se ti fossi iscritto alla newsletter e vuoi rimuoverti clicca questo link: " +
+         						`https://sasycakeaway.com/newsletter/${form.email}/${form.newsremove}`
 				})
 				.then(() =>
 					dialogs
@@ -29,27 +30,41 @@
 		} else if (form != null) {
 			dialogs.alert("Errore durante la creazione dell'account, " + form.message);
 		}
+		loading = false;
+		const form_Element = document.getElementById('form');
 		if (
 			/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
 		) {
-			document.getElementById('form').classList =
-				'uk-card uk-card-default uk-card-body uk-width-1-2@m formatel';
+			if(form_Element != null)
+			form_Element.classList = 'uk-card uk-card-default uk-card-body uk-width-1-2@m formatel';
 		}
 	});
 	function showfn() {
 		show = !show;
+
+		const pass: HTMLElement | null = document.getElementById('pass');
+
 		if (show) {
-			document.getElementById('pass').type = 'text';
+			if(pass != null){
+				pass.type = 'text';
+			}
 		} else {
-			document.getElementById('pass').type = 'password';
+			if(pass != null){
+				pass.type = 'password';
+			}
 		}
 	}
 	function showfncheck() {
-		showcheck = !showcheck;
-		if (showcheck) {
-			document.getElementById('passcheck').type = 'text';
+		show = !showcheck;
+		const pass = document.getElementById('passcheck');
+		if (show) {
+			if(pass != null){
+				pass.type = 'text';
+			}
 		} else {
-			document.getElementById('passcheck').type = 'password';
+			if(pass != null){
+				pass.type = 'password';
+			}
 		}
 	}
 </script>
@@ -58,11 +73,13 @@
 	<link rel="stylesheet" href="/css/login.css" />
 </svelte:head>
 <br />
+
+{#if !loading}
 <div class="uk-card uk-card-default uk-card-body uk-width-1-2@m forma" id="form">
 	<form class="uk-fieldset" method="POST" action="?/registrati">
-		<div align="center">
+		<center>
 			<legend class="uk-legend">Registra un account su Sasy's Cake Away</legend>
-		</div>
+		</center>
 		<div class="uk-margin">
 			<input id="username" class="uk-input" type="text" placeholder="E-mail" name="email" />
 		</div>
@@ -130,15 +147,21 @@
 				> di Sasy's Cake Away</label
 			>
 		</div>
-		<div align="center">
+		<center>
 			<div>
 				<button class="uk-button uk-button-primary">Registrati</button>
 				<br />
 				<br />
 			</div>
-		</div>
+		</center>
 	</form>
 </div>
+{:else}
+	<center>
+		<Circle2 size="256"></Circle2>
+	</center>
+	
+{/if}
 <br />
 
 <style>
@@ -147,8 +170,5 @@
 		margin-top: 10px;
 		background-color: transparent;
 		border: 0px;
-	}
-	.iconcheck {
-		margin-top: 100px;
 	}
 </style>
