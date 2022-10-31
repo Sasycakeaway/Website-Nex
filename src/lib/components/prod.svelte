@@ -1,125 +1,81 @@
+<script lang="ts">
+	import client from '$lib/js/contentfulClient';
+	import { onMount } from 'svelte';
+	import { useLazyImage as lazyImage } from 'svelte-lazy-image';
+	import { Circle2 } from 'svelte-loading-spinners';
+	let cards: Array<Card> = [];
+	let loading: boolean = true;
+
+	async function get_cards() {
+		let raw_card = await client.getEntries({
+			content_type: 'cardDescription'
+		});
+
+		raw_card.items.forEach(
+			(element: {
+				fields: {
+					description: string;
+					href: string;
+					descriptionTrue: { content: { content: { value: string }[] }[] };
+					icon: { fields: { file: { url: string } } };
+				};
+			}) => {
+				cards.push({
+					nome: element.fields.description,
+					description: element.fields.descriptionTrue.content[0].content[0].value,
+					href: element.fields.href,
+					icon: element.fields.icon.fields.file.url.replace('//', 'https://')
+				});
+			}
+		);
+
+		loading = false;
+		cards = cards; // Trigger svelte update
+	}
+
+	onMount(() => get_cards());
+</script>
+
 <link rel="stylesheet" href="/css/card.css" />
-<div class="pure-g">
-  <div class="pure-u-1 pure-u-sm-1-4">
-    <div>
-      <div>
-        <a href="/biscotti/">
-          <div
-            class="uk-card uk-card-default but cardc"
-            uk-height-viewport="expand: true;min-height: 640"
-          >
-            <div class="uk-card-media-top" align="center">
-              <h6>&nbsp;</h6>
-              <img
-                src="https://img.icons8.com/windows/128/682bad/--biscuits.png"
-              />
-            </div>
-            <div class="uk-card-body" align="center">
-              <a style="background-color: white;"
-                ><h3 class=" testow uk-card-title ">Biscotti</h3></a
-              >
-              <p>
-                Le mie proposte di pasticceria secca e biscotteria spaziano dai
-                sapori tradizionali (paste di Meliga, baci di dama,
-                canestrelli...), fino ai più moderni accostamenti tra i sapori
-                dell'orto e gli agrumi in una costante ricerca di delicata
-                estasi del palato.
-              </p>
-              <h4>&nbsp;</h4>
-            </div>
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-  <div class="pure-u-1 pure-u-sm-1-4">
-    <div>
-      <div>
-        <a href="/apebox/">
-          <div
-            class="uk-card uk-card-default but cardc"
-            uk-height-viewport="expand: true;min-height: 640"
-          >
-            <div class="uk-card-media-top" align="center">
-              <h6>&nbsp;</h6>
-              <img src="https://img.icons8.com/ios/128/682bad/bee--v1.png" />
-            </div>
-            <div class="uk-card-body" align="center">
-              <h3 class="uk-card-title">Apebox</h3>
-              <p>
-                Metti una sera tra amici, metti che non sai come rendere
-                frizzante l'atmosfera, metti che lavori fino a tardi e non sai
-                proprio come fare. Ci pensiamo noi con il nostro BOX APERITIVO
-                direttamente a casa tua. Stuzzichini, biscotti e prodotti a Km 0
-                selezionati per voi. Scegli il tuo personaggio e... buon
-                appetito!
-              </p>
-              <hr />
-            </div>
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-  <div class="pure-u-1 pure-u-sm-1-4">
-    <div>
-      <div>
-        <a href="/torte/">
-          <div
-            class="uk-card uk-card-default but cardc"
-            uk-height-viewport="expand: true;min-height: 640"
-          >
-            <div class="uk-card-media-top" align="center">
-              <h6>&nbsp;</h6>
-              <img
-                src="https://img.icons8.com/ios/128/682bad/birthday-cake--v1.png"
-              />
-            </div>
-            <div class="uk-card-body " align="center">
-              <h3 class="uk-card-title testo">Torte</h3>
-              <p class="torte">
-                Con la torta si celebra un evento speciale, una ricorrenza, un
-                compleanno, il matrimonio, o più semplicemente il piacere di
-                stare insieme ai propri cari. In ogni occasione ti posso
-                accompagnare con la torta giusta per te.
-              </p>
-              <br />
-            </div>
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-  <div class="pure-u-1 pure-u-sm-1-4">
-    <div>
-      <a href="/lievitati/">
-        <div
-          class="uk-card uk-card-default but cardc"
-          uk-height-viewport="expand: true;min-height: 640"
-        >
-          <div class="uk-card-media-top" align="center">
-            <h6>&nbsp;</h6>
-            <img
-              src="https://img.icons8.com/external-icongeek26-outline-icongeek26/128/682bad/external-panettone-italian-food-icongeek26-outline-icongeek26.png"
-            />
-          </div>
-          <div class="uk-card-body" align="center">
-            <h3 class="uk-card-title">Panettoni e Colombe</h3>
-            <p class="panettoni">
-              I lievitati da ricorrenza sono prodotti dal lungo procedimento e
-              dalla dedizione lenta e amorosa. Un amore che nasce dalla cura del
-              mio lievito che da più di 128 anni si tramanda di mano in mano per
-              far nascere panettoni e colombe straordinari nel gusto.
-            </p>
-          </div>
-        </div>
-      </a>
-    </div>
-  </div>
+<div>
+	{#if loading}
+		<div align="center">
+			<Circle2 size="256" />
+		</div>
+	{:else}
+		{#each cards as card}
+			<div class="pure-u-1 pure-u-sm-1-4">
+				<div>
+					<div>
+						<a href={card.href}>
+							<div
+								class="uk-card uk-card-default but cardc"
+								uk-height-viewport="expand: true;min-height: 640"
+							>
+								<div class="uk-card-media-top" align="center">
+									<h6>&nbsp;</h6>
+									<img data-src={card.icon} alt="card icon" use:lazyImage />
+								</div>
+								<div class="uk-card-body" align="center">
+									<a style="background-color: white;"
+										><h3 class=" testow uk-card-title ">{card.nome}</h3></a
+									>
+									<p>
+										{card.description}
+									</p>
+									<h4>&nbsp;</h4>
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>
+		{/each}
+	{/if}
 </div>
 
 <style>
-  .uk-card {
-    margin: 10px;
-  }
+	.uk-card {
+		margin: 10px;
+	}
 </style>

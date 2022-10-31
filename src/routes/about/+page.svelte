@@ -1,100 +1,67 @@
+<script lang="ts">
+	import { useLazyImage as lazyImage } from 'svelte-lazy-image';
+	import { onMount } from 'svelte';
+	import client from '$lib/js/contentfulClient';
+	import { Circle2 } from 'svelte-loading-spinners';
+
+	let abouts: Array<About> = [];
+	let loading: boolean = true;
+
+	async function get_time() {
+		let raw_about = await client.getEntries({
+			content_type: 'about'
+		});
+		raw_about.items.forEach((element) => {
+			try {
+				abouts.push({
+					point: element.fields.point,
+					description: element.fields.description.content[0].content[0].value,
+					image: element.fields.image.fields.file.url.replace('//', 'https://'),
+					id: element.fields.id
+				});
+			} catch {
+				abouts.push({
+					point: element.fields.point,
+					description: element.fields.description.content[0].content[0].value,
+					image: '',
+					id: element.fields.id
+				});
+			}
+		});
+		abouts.sort((a, b) => a.id - b.id);
+		loading = false;
+		abouts = abouts;
+	}
+
+	onMount(() => get_time());
+</script>
+
 <svelte:head>
-  <title>About</title>
-  <link rel="stylesheet" href="/css/about.css" />
+	<title>About</title>
+	<link rel="stylesheet" href="/css/about.css" />
 </svelte:head>
-<div class="container">
-  <div class="timeline">
-    <div class="timeline-row">
-      <div class="timeline-time">
-        <p>Io, alby & the great family</p>
-      </div>
-      <div class="timeline-content">
-        <img src="/images/profilo.jpg" class="img" />
-        <br />
-        <p>
-          Eccomi qui, sono Sabrina ma da sempre, per tutti, sono Sasy. Mamma di
-          tre splendidi ragazzi: Matteo, Francesca e Andrea, e moglie
-          innamoratissima di Alby che mi ha sostenuto in questo mio progetto.
-          Sono appassionata di cucina e in particolar modo di dolci con cui amo
-          rallegrare amici e parenti. Ora che i figli sono cresciuti e autonomi,
-          ho molto tempo libero da dedicare alla mia passione.
-        </p>
-      </div>
-    </div>
-
-    <div class="timeline-row">
-      <div class="timeline-time">
-        <p>Cosi'e' nata un'idea...</p>
-      </div>
-      <div class="timeline-content">
-        <p>
-          Perchè non provare a trasformare questa mia passione in un lavoro,
-          senza vendersi un rene? Per contenere i costi, è nata l'idea della IAD
-          o Impresa Alimentare Domestica. Ma da subito si sono presentate
-          insormontabili difficoltà, perchè all'epoca la normativa europea non
-          era stata recepita dalla Regione Piemonte, che richiedeva l'utilizzo
-          di una doppia cucina nella propria abitazione. Oltre ad essere
-          tecnicamente complicato, la soluzione appariva decisamente onerosa.
-        </p>
-      </div>
-    </div>
-
-    <div class="timeline-row">
-      <div class="timeline-time">
-        <p>Pionieri della IAD</p>
-      </div>
-      <div class="timeline-content">
-        <img src="/images/iad.png" class="img" />
-        <br />
-        <p>
-          Ma i sogni alle volte si avverano. All'inizio del 2019, finalmente si
-          possono aprire le IAD utilizzando la sola cucina di casa. Sono
-          pochissime queste realtà in Piemonte, e noi ci buttiamo a capofitto!
-          Iniziamo i lavori di messa a norma smantellando completamente la
-          vecchia cucina e attrezzando quella nuova in modo conforme alle
-          richieste legislative. Finalmente all'inizio del 2020 siamo opertivi,
-          e con mia grande soddisfazione ho conservato il mio rene e sono in
-          ottima salute!
-        </p>
-      </div>
-    </div>
-
-    <div class="timeline-row">
-      <div class="timeline-time">
-        <p>I miei corsi di formazione</p>
-      </div>
-      <div class="timeline-content">
-        <img src="/images/corsi.jpg" class="img" />
-        <br />
-        <p>
-          Per affrontare questo percorso mi sono preparata cercando di unire i
-          doni di natura agli insegnamenti di mia mamma. Ma soprattutto ho
-          acquisito una formazione di base, a cui si sono aggiunte letture
-          tecniche e corsi tematici: corso base di pasticceria Mary Cake
-          Decorating, Modeling con Margherita Ferrara e Silvia Mancini, Sugar
-          Paste PME Scuola Italian Cake Design, frolla 3D con Paola Azzolina,
-          Pasticceria Mignon con Roberto Cantolaqua, Colomba e dolci pasquali
-          con Oscar Pagani, e molto altro ancora.
-        </p>
-      </div>
-    </div>
-
-    <div class="timeline-row">
-      <div class="timeline-time">
-        <p>Manchi solo tu!</p>
-      </div>
-      <div class="timeline-content">
-        <img src="/images/tu.jpg" class="img" />
-        <br />
-        <p>
-          Vieni a trovarmi nel mio laboratorio in Viale Falchera 69, ti farò
-          entrare nel mio mondo e ti farò gustare qualcuna delle mie
-          prelibatezze. Prenota una torta da Sasy's chiamando o scrivendo una
-          mail. Insieme progetteremo il tuo dolce unico e irripetibile. Un
-          compleanno, un evento, una festa, con le mie creazioni diventeranno un
-          momento indimenticabile!
-        </p>
-      </div>
-    </div>
-  </div>
-</div>
+{#if loading}
+	<div align="center">
+		<br />
+		<Circle2 size="256" />
+	</div>
+{:else}
+	<div class="container">
+		<div class="timeline">
+			{#each abouts as about}
+				<div class="timeline-row">
+					<div class="timeline-time">
+						<p>{about.point}</p>
+					</div>
+					<div class="timeline-content">
+						<img data-src={about.image} class="img" alt="profilo" use:lazyImage />
+						<br />
+						<p>
+							{about.description}
+						</p>
+					</div>
+				</div>
+			{/each}
+		</div>
+	</div>
+{/if}

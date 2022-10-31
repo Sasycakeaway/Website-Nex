@@ -1,12 +1,12 @@
 <script>
-  import Head from "$lib/components/uovo/head.svelte";
-  import Slide from "$lib/components/uovo/slide.svelte";
-  import Item from "$lib/components/uovo/item.svelte";
+	import Head from '$lib/components/uovo/head.svelte';
+	import Slide from '$lib/components/uovo/slide.svelte';
+	import Item from '$lib/components/uovo/item.svelte';
 </script>
 
 <svelte:head>
-  <title>Home</title>
-  <link rel="stylesheet" href="/css/fresca.css" />
+	<title>Home</title>
+	<link rel="stylesheet" href="/css/fresca.css" />
 </svelte:head>
 <br />
 <Head />
@@ -14,6 +14,6 @@
 <Item />
 <br />
 <div align="center">
-  <Slide />
+	<Slide />
 </div>
 <br />

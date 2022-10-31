@@ -9,7 +9,7 @@
 	var pass;
 	let show = false;
 
-  /** @type {import('./$types').ActionData} */
+	/** @type {import('./$types').ActionData} */
 	export let form;
 
 	onMount(() => {
@@ -19,9 +19,9 @@
 			document.getElementById('form').classList =
 				'uk-card uk-card-default uk-card-body uk-width-1-2@m formatel';
 		}
-    if(form != null && form.success == false){
-      dialogs.alert("Login fallito, " + form?.message);
-    }
+		if (form != null && form.success == false) {
+			dialogs.alert('Login fallito, ' + form?.message);
+		}
 	});
 
 	function showfn() {

@@ -3,33 +3,71 @@
 // and what to do when importing types
 declare namespace App {}
 
-declare interface User{
-    CF: string;
-    Nascita: string;
-    News: boolean;
-    PK_Email: string;
-    Password: string;
-    Telefono: string;
-    Timestamp: Date;
+declare interface User {
+	CF: string;
+	Nascita: string;
+	News: boolean;
+	PK_Email: string;
+	Password: string;
+	Telefono: string;
+	Timestamp: Date;
 }
 
-declare interface Data{
-    user: User;
+declare interface Data {
+	user: User;
 }
 
-declare interface Ordini{
-    FK_Email: string
-    PK_Id: string
-    Totale: number
-    Cart: string
-    Timestamp: Date
-    Nome: string
-    Cognome: string
-    Indirizzo: string
-    Cap: string
-    Domicilio: string
+declare interface Ordini {
+	FK_Email: string;
+	PK_Id: string;
+	Totale: number;
+	Cart: string;
+	Timestamp: Date;
+	Nome: string;
+	Cognome: string;
+	Indirizzo: string;
+	Cap: string;
+	Domicilio: string;
 }
 
-declare interface DataOrder{
-    ordini: Array<Ordini>
+declare interface DataOrder {
+	ordini: Array<Ordini>;
+}
+
+declare interface Card {
+	nome: string;
+	description: string;
+	href: string;
+	icon: string;
+}
+
+declare interface About {
+	point: string;
+	description: string;
+	image: string;
+	id: number;
+}
+
+declare interface Prodotto {
+	nome: string;
+	description: string;
+	image: string;
+	shortDescription: string;
+	citazione: string;
+	is_single_page: boolean;
+	gallery: Array<string>;
+}
+
+declare interface FromForm {
+	prod: string;
+}
+
+declare interface DropdownProd {
+	type: string;
+	name: string;
+}
+
+declare interface Header_Info {
+	title: string;
+	subtitle: string;
 }
