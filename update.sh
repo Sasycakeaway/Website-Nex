@@ -1,3 +1,4 @@
+cd Website-Nex
 pm2 stop all
 git pull
 npm run build
