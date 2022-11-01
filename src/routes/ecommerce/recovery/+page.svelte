@@ -17,10 +17,12 @@
 					uuid: form.id,
 					email: form.email,
 				});
-			}	
+			}else{
+				dialogs.alert("Richiesta già esistente o email non esistente");
+			}
 		}catch{
-			dialogs.alert("Richiesta già esistente o email non esistente");
 		}
+
 		if (
 			/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
 		) {

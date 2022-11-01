@@ -25,7 +25,7 @@
 	<link rel="stylesheet" href="/css/login.css" />
 </svelte:head>
 <div class="uk-card uk-card-default uk-card-body uk-width-1-2@m forma" id="form">
-	<fieldset class="uk-fieldset">
+	<form class="uk-fieldset" method="POST" action="?/change">
 		<div align="center">
 			<legend class="uk-legend">Sasy's Cake Away login</legend>
 		</div>
@@ -33,7 +33,7 @@
 			<center>
 				<p>Inserire la Email per la quale si vuole ripristinare la password</p>
 			</center>
-			<input class="uk-input" type="text" placeholder="Username" name="email" />
+			<input class="uk-input" type="text" placeholder="Email" name="email"/>
 		</div>
 		<div class="uk-margin">
 			<center>
@@ -58,6 +58,6 @@
 				<button class="uk-button uk-button-primary">Ripristina</button>
 			</center>
 		</div>
-	</fieldset>
+	</form>
 </div>
 <br />
