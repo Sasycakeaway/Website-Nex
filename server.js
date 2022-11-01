@@ -1,8 +1,10 @@
 // my-server.js
 import { handler } from './build/handler.js';
 import express from 'express';
+import compression from 'compression';
 
 const app = express();
+app.use(compression());
 
 // add a route that lives separately from the SvelteKit app
 app.get('/healthcheck', (req, res) => {
