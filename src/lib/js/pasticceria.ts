@@ -33,23 +33,10 @@ export function pezzi(e: string) {
 	});
 }
 
-export function apebox(e: string) {
+export function apebox(e: string, price: number, image: string) {
 	dialogs.prompt('Quanti box vuoi ordinare?').then((output) => {
 		try {
-			switch (e) {
-				case 'Benvenuti al nord':
-					pusha(e, output[0], 12, "/images/Benvenuti al nord.jpg");
-					break;
-				case 'Il vegetariano':
-					pusha(e, output[0], 12, "/images/Benvenuti al sud.jpg");
-					break;
-				case 'Il trasformista':
-					pusha(e, output[0], 18, "/images/Il trasformista.jpg");
-					break;
-				default:
-					pusha(e, output[0], 15, "/images/Il vegetariano.jpg");
-					break;
-			}
+			pusha(e, output[0], price, image);
 		} catch (error) {
 			console.log(error);
 		}

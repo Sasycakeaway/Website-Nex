@@ -87,3 +87,10 @@ declare interface Reset_Password{
 	email: string;
 	success: boolean;
 }
+
+declare interface Apebox{
+	title: string;
+	price: number;
+	list: string;
+	photo: string;
+}
