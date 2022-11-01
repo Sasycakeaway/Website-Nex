@@ -56,6 +56,9 @@ declare interface Prodotto {
 	citazione: string;
 	is_single_page: boolean;
 	gallery: Array<string>;
+	buyable: boolean;
+	price: number;
+	buyPhrase: string;
 }
 
 declare interface FromForm {

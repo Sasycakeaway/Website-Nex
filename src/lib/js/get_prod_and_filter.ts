@@ -20,7 +20,10 @@ export async function get_prod_and_filter(prod: string): Promise<Array<Prodotto>
 					image: element.fields.headerPhoto.fields.file.url.replace('//', 'https://'),
 					citazione: element.fields.citazione,
 					is_single_page: false,
-					gallery: []
+					gallery: [],
+					buyable: element.fields.buyable,
+					price: element.fields.price,
+					buyPhrase: element.fields.buyPhrase
 				});
 			}
 		} catch (error) {
@@ -32,7 +35,10 @@ export async function get_prod_and_filter(prod: string): Promise<Array<Prodotto>
 					image: '',
 					citazione: element.fields.citazione,
 					is_single_page: false,
-					gallery: []
+					gallery: [],
+					buyable: element.fields.buyable,
+					price: element.fields.price,
+					buyPhrase: element.fields.buyPhrase
 				});
 			} catch (error) {
 				console.error(error);
@@ -66,7 +72,10 @@ export async function get_prod_and_filter(prod: string): Promise<Array<Prodotto>
 					image: '',
 					citazione: '',
 					is_single_page: true,
-					gallery: images
+					gallery: images,
+					buyable: element.fields.buyable,
+					price: element.fields.price,
+					buyPhrase: element.fields.buyPhrase
 				});
 			}
 		});

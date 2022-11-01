@@ -14,7 +14,10 @@
 		image: string,
 		all: boolean = true,
 		cit: string,
-		header_info: Header_Info = { title: '', subtitle: '' };
+		header_info: Header_Info = { title: '', subtitle: '' },
+		is_buyable: boolean,
+		price: number,
+		alert_string:string;
 
 	let loading: boolean = true;
 
@@ -27,11 +30,14 @@
 		loading = false;
 	});
 
-	function update_prod(na: string, desc: string, img: string, citazione: string) {
+	function update_prod(na: string, desc: string, img: string, citazione: string, buyable: boolean, price_raw: number, alt_str: string) {
 		name = na;
 		description = desc;
 		image = img;
 		cit = citazione;
+		is_buyable = buyable;
+		price = price_raw;
+		alert_string = alt_str;
 		all = false;
 	}
 </script>
@@ -88,7 +94,7 @@
 									<a
 										href=""
 										on:click={() =>
-											update_prod(prod.nome, prod.description, prod.image, prod.citazione)}
+											update_prod(prod.nome, prod.description, prod.image, prod.citazione, prod.buyable, prod.price, prod.buyPhrase)}
 									>
 										<h3 class="uk-card-title">{prod.nome}</h3>
 									</a>
@@ -127,13 +133,15 @@
 				</div>
 			</div>
 
-			<br />
-			<button
-				class="uk-button uk-button-primary carbut"
-				id={name}
-				on:click={() => biscotti(name, image)}>Aggiungi al carrello</button
-			>
-			<br />
+			{#if is_buyable}
+				<br />
+				<button
+					class="uk-button uk-button-primary carbut"
+					id={name}
+					on:click={() => biscotti(name, image, price, alert_string)}>Aggiungi al carrello</button
+				>
+				<br />
+			{/if}
 			<div class="testo">
 				<p class="citprod" style="color:rgb(195, 0, 255)">
 					{cit}

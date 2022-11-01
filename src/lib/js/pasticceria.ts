@@ -13,10 +13,10 @@ export function initpage() {
 	});
 }
 
-export function biscotti(e: string, image: string) {
-	dialogs.prompt('Quanti sacchetti da 250G vuoi ordinare?').then((output) => {
+export function biscotti(e: string, image: string, price: number, alertstring: string) {
+	dialogs.prompt(alertstring).then((output) => {
 		try {
-			pusha(e, output[0], 5, image);
+			pusha(e, output[0], price, image);
 		} catch (error) {
 			console.log(error);
 		}
