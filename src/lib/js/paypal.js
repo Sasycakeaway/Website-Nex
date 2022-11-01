@@ -12,7 +12,7 @@ function putorder(nome, cognome, indirizzo, cap, domicilio, email, cart, totale,
 	urlencoded.append('id', id);
 	urlencoded.append('nome', nome);
 	urlencoded.append('cognome', cognome);
-	urlencoded.append('indirizzo', indirizzo + " " + cittavar);
+	urlencoded.append('indirizzo', indirizzo + ' ' + cittavar);
 	urlencoded.append('cap', cap);
 	urlencoded.append('domicilio', domicilio);
 	urlencoded.append('totale', totale);
@@ -29,7 +29,7 @@ function putorder(nome, cognome, indirizzo, cap, domicilio, email, cart, totale,
 	fetch('/ecommerce/pagamenti?/compra', requestOptions)
 		.then((response) => response.json())
 		.then(async (result) => {
-			console.log(result)
+			console.log(result);
 			if (result.data.success == true) {
 				try {
 					await emailjs.send('service_ccwtjlr', 'template_cavi0no', {
@@ -41,9 +41,11 @@ function putorder(nome, cognome, indirizzo, cap, domicilio, email, cart, totale,
 					});
 					location.href = '/ecommerce/ordercomplete';
 				} catch (error) {
-					dialogs.alert(
-						"Errore durante la registrazione dell'ordine, contattarci, fornendo i dettagli del pagamento per richiedere il rimborso"
-					).then(() => location.href = "/");
+					dialogs
+						.alert(
+							"Errore durante la registrazione dell'ordine, contattarci, fornendo i dettagli del pagamento per richiedere il rimborso"
+						)
+						.then(() => (location.href = '/'));
 					console.log(error);
 				}
 				sessionStorage.clear();
@@ -56,7 +58,17 @@ function putorder(nome, cognome, indirizzo, cap, domicilio, email, cart, totale,
 			console.error(err);
 		});
 }
-export async function init(totale, nome, cognome, indirizzo, cap, domicilio, email, cart, cittavar) {
+export async function init(
+	totale,
+	nome,
+	cognome,
+	indirizzo,
+	cap,
+	domicilio,
+	email,
+	cart,
+	cittavar
+) {
 	emailjs.init('XI3aGphpOi4C1--qr');
 	console.log(totale);
 	try {

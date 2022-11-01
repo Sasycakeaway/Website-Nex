@@ -27,14 +27,23 @@
 		if (nome != null && cognome != null && indirizzo != null && cap != null && cittavar != null) {
 			indirizzo = cittavar + ',' + indirizzo;
 			let json_cart;
-			if(cart != null)
-				json_cart = JSON.parse(cart);
+			if (cart != null) json_cart = JSON.parse(cart);
 
-			for(let i = 0; i < json_cart.length; i++) {
-				json_cart[i].image = ""	// Sanitize the image property in DB
+			for (let i = 0; i < json_cart.length; i++) {
+				json_cart[i].image = ''; // Sanitize the image property in DB
 			}
 
-			init(totale, nome, cognome, indirizzo, cap, domicilio, email, JSON.stringify(json_cart), cittavar);
+			init(
+				totale,
+				nome,
+				cognome,
+				indirizzo,
+				cap,
+				domicilio,
+				email,
+				JSON.stringify(json_cart),
+				cittavar
+			);
 			document.getElementById('conf').style.visibility = 'hidden';
 		} else alert('Compila tutti i campi richiesti');
 	}
@@ -58,11 +67,17 @@
 		<legend class="uk-legend">Modulo di pagamento</legend>
 
 		<div class="uk-margin">
-			<input class="uk-input" type="text" placeholder="Nome" name="nome" bind:value={nome}/>
+			<input class="uk-input" type="text" placeholder="Nome" name="nome" bind:value={nome} />
 			<br />
 			<br />
 
-			<input class="uk-input" type="text" placeholder="Cognome" name="cognome" bind:value={cognome}/>
+			<input
+				class="uk-input"
+				type="text"
+				placeholder="Cognome"
+				name="cognome"
+				bind:value={cognome}
+			/>
 			<br />
 			<br />
 			<GooglePlacesAutocomplete
@@ -83,10 +98,10 @@
 			/>
 			<br />
 			<br />
-			<input class="uk-input" type="text" placeholder="CAP" name="cap" bind:value={cap}/>
+			<input class="uk-input" type="text" placeholder="CAP" name="cap" bind:value={cap} />
 			<br />
 			<br />
-			<input type="checkbox" id="domicilio" name="domicilio" bind:checked={domicilio}/>
+			<input type="checkbox" id="domicilio" name="domicilio" bind:checked={domicilio} />
 			<label for="domicilio"
 				>Consegna a domicilio o spedizione se l'indirizzo di consegna è fuori dal Piemonte</label
 			>

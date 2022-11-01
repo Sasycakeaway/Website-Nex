@@ -76,20 +76,20 @@ declare interface Header_Info {
 	image: string;
 }
 
-declare interface Register_Response{
+declare interface Register_Response {
 	success: boolean;
-    message: string;
+	message: string;
 	email: string;
 	newsremove: string;
 }
 
-declare interface Reset_Password{
+declare interface Reset_Password {
 	id: string;
 	email: string;
 	success: boolean;
 }
 
-declare interface Apebox{
+declare interface Apebox {
 	title: string;
 	price: number;
 	list: string;

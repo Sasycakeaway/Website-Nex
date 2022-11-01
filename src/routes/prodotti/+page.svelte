@@ -17,7 +17,7 @@
 		header_info: Header_Info = { title: '', subtitle: '', image: '' },
 		is_buyable: boolean,
 		price: number,
-		alert_string:string;
+		alert_string: string;
 
 	let loading: boolean = true;
 
@@ -30,7 +30,15 @@
 		loading = false;
 	});
 
-	function update_prod(na: string, desc: string, img: string, citazione: string, buyable: boolean, price_raw: number, alt_str: string) {
+	function update_prod(
+		na: string,
+		desc: string,
+		img: string,
+		citazione: string,
+		buyable: boolean,
+		price_raw: number,
+		alt_str: string
+	) {
 		name = na;
 		description = desc;
 		image = img;
@@ -59,7 +67,10 @@
 	{#if all}
 		<br />
 		<div class="uk-section-default">
-			<div class="uk-section uk-light uk-background-cover imghead" style={"background-image: url(" + header_info.image + ")"}>
+			<div
+				class="uk-section uk-light uk-background-cover imghead"
+				style={'background-image: url(' + header_info.image + ')'}
+			>
 				<div class="uk-container" align="center">
 					<h3 class="tit" style="color:white;">
 						{header_info.title}
@@ -94,7 +105,15 @@
 									<a
 										href=""
 										on:click={() =>
-											update_prod(prod.nome, prod.description, prod.image, prod.citazione, prod.buyable, prod.price, prod.buyPhrase)}
+											update_prod(
+												prod.nome,
+												prod.description,
+												prod.image,
+												prod.citazione,
+												prod.buyable,
+												prod.price,
+												prod.buyPhrase
+											)}
 									>
 										<h3 class="uk-card-title">{prod.nome}</h3>
 									</a>
@@ -197,9 +216,9 @@
 	.icon {
 		margin-left: 300px;
 	}
-	.cover{
+	.cover {
 		/* Add the blur effect */
 		filter: blur(8px);
-  		-webkit-filter: blur(8px);
+		-webkit-filter: blur(8px);
 	}
 </style>

@@ -6,22 +6,19 @@
 	/** @type {import('./$types').ActionData} */
 	export let form: Reset_Password;
 
-	onMount(async() => {
+	onMount(async () => {
 		emailjs.init('tfSXJVz0VLhWR2I_5');
-		try{
+		try {
 			if (form.success && form != null) {
-				dialogs.alert(
-					"Segui le istruzioni nella email per ripristinare la password"
-				);
-				await emailjs.send("service_s11ial4", "template_f3ea7rh", {
+				dialogs.alert('Segui le istruzioni nella email per ripristinare la password');
+				await emailjs.send('service_s11ial4', 'template_f3ea7rh', {
 					uuid: form.id,
-					email: form.email,
+					email: form.email
 				});
-			}else{
-				dialogs.alert("Richiesta già esistente o email non esistente");
+			} else {
+				dialogs.alert('Richiesta già esistente o email non esistente');
 			}
-		}catch{
-		}
+		} catch {}
 
 		if (
 			/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)

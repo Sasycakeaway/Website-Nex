@@ -34,7 +34,7 @@ export async function get_page_header_type(type: string) {
 			header = {
 				title: element.fields.title,
 				subtitle: element.fields.subTitle,
-				image: element.fields.cover.fields.file.url.replace("//", "https://")
+				image: element.fields.cover.fields.file.url.replace('//', 'https://')
 			};
 		}
 	});

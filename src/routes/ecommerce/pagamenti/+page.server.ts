@@ -7,7 +7,6 @@ import { encrypt } from '$lib/crypto/aes';
 const prisma = new PrismaClient();
 
 export const load: PageServerLoad = async ({ cookies }) => {
-
 	const session = cookies.get('session');
 	const email = cookies.get('email');
 
@@ -39,7 +38,7 @@ export const actions = {
 		try {
 			await prisma.ordini.create({
 				data: {
-					PK_Id: form_data.get("id"),
+					PK_Id: form_data.get('id'),
 					Nome: encrypt(form_data.get('nome')),
 					Cognome: encrypt(form_data.get('cognome')),
 					Indirizzo: encrypt(form_data.get('indirizzo')),

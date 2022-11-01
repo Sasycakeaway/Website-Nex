@@ -186,11 +186,7 @@
 						<div class="row">
 							<div class="col">
 								{#if prod.id != 'Il trasformista'}
-									<img
-										src={prod.image}
-										alt="Foto del prodotto"
-										class="imgcart"
-									/>
+									<img src={prod.image} alt="Foto del prodotto" class="imgcart" />
 								{:else}
 									<img
 										src={'/images/Il trasformista.png'}

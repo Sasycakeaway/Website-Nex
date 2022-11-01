@@ -33,7 +33,7 @@
 			<center>
 				<p>Inserire la Email per la quale si vuole ripristinare la password</p>
 			</center>
-			<input class="uk-input" type="text" placeholder="Email" name="email"/>
+			<input class="uk-input" type="text" placeholder="Email" name="email" />
 		</div>
 		<div class="uk-margin">
 			<center>

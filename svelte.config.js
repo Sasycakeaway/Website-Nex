@@ -8,11 +8,11 @@ const config = {
 	preprocess: preprocess(),
 
 	kit: {
-		adapter: adapter({ 
+		adapter: adapter({
 			out: 'build',
 			precompress: true
 		}),
-		csrf: false,
+		csrf: false
 	}
 };
 

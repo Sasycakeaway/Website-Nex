@@ -7,8 +7,7 @@ export function initpage() {
 		if (/Android|webOS|iPhone|iPad|iPod|Opera Mini/i.test(navigator.userAgent)) {
 		} else {
 			const card = document.getElementById('card');
-			if(card != null)
-				card.style.width = '60%';
+			if (card != null) card.style.width = '60%';
 		}
 	});
 }
@@ -28,7 +27,7 @@ export function pezzi(e: string) {
 		try {
 			pusha(e, output[0], 5);
 		} catch (error) {
-			console.error(error)
+			console.error(error);
 		}
 	});
 }
