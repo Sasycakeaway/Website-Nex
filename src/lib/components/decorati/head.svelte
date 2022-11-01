@@ -1,5 +1,5 @@
 <div class="uk-section-default">
-	<div class="uk-section uk-light uk-background-cover dechead">
+	<div class="uk-section uk-light uk-background-cover dechead" style="background: #84739b;">
 		<div class="uk-container" align="center">
 			<div>
 				<h3 class="det" style="color:white">

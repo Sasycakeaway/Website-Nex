@@ -47,7 +47,7 @@
 			<div class="pure-u-1 pure-u-sm-1-4">
 				<div>
 					<div>
-						<a href={card.href}>
+						<a on:click={() => location.href = card.href} href="#0">
 							<div
 								class="uk-card uk-card-default but cardc"
 								uk-height-viewport="expand: true;min-height: 640"

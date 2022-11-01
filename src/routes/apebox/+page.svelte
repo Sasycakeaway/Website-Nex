@@ -52,7 +52,7 @@
 </svelte:head>
 <br />
 <div class="uk-section-default">
-	<div class="uk-section uk-light uk-background-cover apehead">
+	<div class="uk-section uk-light uk-background-cover apehead" style="background: #84739b;">
 		<div class="uk-container" align="center">
 			<h3 class="tit" style="color:white">{header.title}</h3>
 			<div>

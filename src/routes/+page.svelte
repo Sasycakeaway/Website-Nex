@@ -107,7 +107,9 @@
 </div>
 <br />
 <div align="center">
-	<button class="uk-button uk-button-primary uk-button-large but">Scopri i nostri prodotti</button>
+	<a href="/all_prod">
+		<button class="uk-button uk-button-primary uk-button-large but">Scopri i nostri prodotti</button>
+	</a>
 	<p class="info">
 		Per prenotazioni ed ordini chiama il 333/9273367 oppure scrivi a Sasy.vitrani@gmail.com
 	</p>

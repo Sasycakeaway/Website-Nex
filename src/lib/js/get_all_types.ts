@@ -12,7 +12,9 @@ export async function get_all_types(): Promise<Array<DropdownProd>> {
 		if (all_types.filter((e) => e.type === type).length == 0) {
 			all_types.push({
 				type: type,
-				name: element.fields.typeMenu
+				name: element.fields.typeMenu,
+				description: element.fields.subTitle,
+				image: element.fields.coverAll.fields.file.url.replace("//", "https://")
 			});
 		}
 	});

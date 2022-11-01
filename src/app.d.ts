@@ -61,6 +61,7 @@ declare interface Prodotto {
 	buyPhrase: string;
 }
 
+
 declare interface FromForm {
 	prod: string;
 }
@@ -68,6 +69,8 @@ declare interface FromForm {
 declare interface DropdownProd {
 	type: string;
 	name: string;
+	description: string;
+	image: string;
 }
 
 declare interface Header_Info {
