@@ -50,11 +50,7 @@ export function pushatra(prodotti) {
 			ingredienti: trasformista,
 			prezzo: 18
 		});
-		console.log('Totale prima');
-		console.log(totale);
 		totale = totale + 18;
-		console.log('Totale dopo');
-		console.log(totale);
 		totstore.set(totale);
 		totstore.subscribe((value) => {
 			localStorage.setItem('totale', value);
@@ -64,5 +60,4 @@ export function pushatra(prodotti) {
 			localStorage.setItem('cart', value);
 		});
 	}
-	console.log(cart);
 }

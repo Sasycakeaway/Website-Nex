@@ -20,9 +20,10 @@ export async function get_all_types(): Promise<Array<DropdownProd>> {
 }
 
 export async function get_page_header_type(type: string) {
-	let header = {
+	let header: Header_Info = {
 		title: '',
-		subtitle: ''
+		subtitle: '',
+		image: ''
 	};
 	const raw_types = await client?.getEntries({
 		content_type: 'type'
@@ -32,7 +33,8 @@ export async function get_page_header_type(type: string) {
 		if (element.fields.type == type) {
 			header = {
 				title: element.fields.title,
-				subtitle: element.fields.subTitle
+				subtitle: element.fields.subTitle,
+				image: element.fields.cover.fields.file.url.replace("//", "https://")
 			};
 		}
 	});

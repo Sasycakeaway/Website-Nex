@@ -73,6 +73,7 @@ declare interface DropdownProd {
 declare interface Header_Info {
 	title: string;
 	subtitle: string;
+	image: string;
 }
 
 declare interface Register_Response{

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Circle3 } from 'svelte-loading-spinners';
 	import { onMount } from 'svelte';
-	import { dialogs } from 'svelte-dialogs';
+
 	let loading = true,
 		ordini: Array<Ordini> = [];
 	/** @type {import('./$types').PageData} */

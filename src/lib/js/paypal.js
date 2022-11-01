@@ -59,7 +59,6 @@ function putorder(nome, cognome, indirizzo, cap, domicilio, email, cart, totale,
 export async function init(totale, nome, cognome, indirizzo, cap, domicilio, email, cart, cittavar) {
 	emailjs.init('XI3aGphpOi4C1--qr');
 	console.log(totale);
-	totale = 0.01
 	try {
 		await paypal_sdk
 			.Buttons({

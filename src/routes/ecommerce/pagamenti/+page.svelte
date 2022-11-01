@@ -2,6 +2,7 @@
 	import { init } from '$lib/js/paypal';
 	import { onMount } from 'svelte';
 	import { GooglePlacesAutocomplete } from '@beyonk/svelte-googlemaps';
+	import { json } from '@sveltejs/kit';
 	//import google from 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBomQdV10KKTb45y-uIXWl-ZlFgyEOxcsc&libraries=places&callback=initMap'
 	let nome: string,
 		cognome: string,
@@ -25,7 +26,15 @@
 	function pagamento() {
 		if (nome != null && cognome != null && indirizzo != null && cap != null && cittavar != null) {
 			indirizzo = cittavar + ',' + indirizzo;
-			init(totale, nome, cognome, indirizzo, cap, domicilio, email, cart, cittavar);
+			let json_cart;
+			if(cart != null)
+				json_cart = JSON.parse(cart);
+
+			for(let i = 0; i < json_cart.length; i++) {
+				json_cart[i].image = ""	// Sanitize the image property in DB
+			}
+
+			init(totale, nome, cognome, indirizzo, cap, domicilio, email, JSON.stringify(json_cart), cittavar);
 			document.getElementById('conf').style.visibility = 'hidden';
 		} else alert('Compila tutti i campi richiesti');
 	}

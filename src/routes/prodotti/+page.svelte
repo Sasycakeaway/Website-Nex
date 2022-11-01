@@ -14,7 +14,7 @@
 		image: string,
 		all: boolean = true,
 		cit: string,
-		header_info: Header_Info = { title: '', subtitle: '' },
+		header_info: Header_Info = { title: '', subtitle: '', image: '' },
 		is_buyable: boolean,
 		price: number,
 		alert_string:string;
@@ -59,13 +59,13 @@
 	{#if all}
 		<br />
 		<div class="uk-section-default">
-			<div class="uk-section uk-light uk-background-cover imghead">
+			<div class="uk-section uk-light uk-background-cover imghead" style={"background-image: url(" + header_info.image + ")"}>
 				<div class="uk-container" align="center">
 					<h3 class="tit" style="color:white;">
 						{header_info.title}
 					</h3>
 					<div>
-						<p class="det">
+						<p class="det" style="color: #d5ddb6;">
 							{header_info.subtitle}
 						</p>
 					</div>
@@ -196,5 +196,10 @@
 	}
 	.icon {
 		margin-left: 300px;
+	}
+	.cover{
+		/* Add the blur effect */
+		filter: blur(8px);
+  		-webkit-filter: blur(8px);
 	}
 </style>
