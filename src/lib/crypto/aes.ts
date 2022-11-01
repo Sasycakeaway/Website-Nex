@@ -12,6 +12,7 @@ export function encrypt(text: string) {
 	crypted += cipher.final('hex');
 	return crypted;
 }
+
 export function decrypt(text: string) {
 	const decipher = crypto.createDecipheriv(
 		'aes-256-cbc',

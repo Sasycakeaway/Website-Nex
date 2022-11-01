@@ -81,3 +81,9 @@ declare interface Register_Response{
 	email: string;
 	newsremove: string;
 }
+
+declare interface Reset_Password{
+	id: string;
+	email: string;
+	success: boolean;
+}

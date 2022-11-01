@@ -27,7 +27,7 @@ export const load: PageServerLoad = async ({ cookies }) => {
 /** @type {import('./$types').Actions} */
 export const actions = {
 	logout: async ({ cookies, request }) => {
-		cookies.set('user', null, {
+		cookies.set('email', null, {
 			// send cookie for every page
 			path: '/',
 			// server side only cookie so you can't use `document.cookie`
