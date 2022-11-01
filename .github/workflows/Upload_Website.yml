@@ -11,6 +11,7 @@ jobs:
         with:
           node-version: 19.x
       - run: npm i
+      - run: touch src/lib/crypto/config.json
       - run: npm run build
   upload:
     name: Connect to VPS
