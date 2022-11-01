@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
 import { v4 as uuidv4 } from 'uuid';
+import { encrypt } from '$lib/crypto/aes';
 
 const prisma = new PrismaClient();
 
@@ -39,11 +40,11 @@ export const actions = {
 			await prisma.ordini.create({
 				data: {
 					PK_Id: form_data.get("id"),
-					Nome: form_data.get('nome'),
-					Cognome: form_data.get('cognome'),
-					Indirizzo: form_data.get('indirizzo'),
+					Nome: encrypt(form_data.get('nome')),
+					Cognome: encrypt(form_data.get('cognome')),
+					Indirizzo: encrypt(form_data.get('indirizzo')),
 					FK_Email: form_data.get('email'),
-					Cap: form_data.get('cap'),
+					Cap: encrypt(form_data.get('cap')),
 					Domicilio: domicilio,
 					Totale: parseInt(form_data.get('totale')),
 					Cart: form_data.get('cart'),

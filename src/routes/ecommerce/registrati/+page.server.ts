@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import * as CodiceFiscaleUtils from '@marketto/codice-fiscale-utils';
 import md5 from 'md5';
 import { v4 as uuidv4 } from 'uuid';
+import { encrypt } from '$lib/crypto/aes';
 
 const prisma = new PrismaClient();
 
@@ -38,9 +39,9 @@ export const actions = {
 					PK_Email: email,
 					Password: md5(form_data.get('password')),
 					News: news,
-					CF: cf,
-					Nascita: form_data.get('nascita'),
-					Telefono: form_data.get('telefono')
+					CF: encrypt(cf),
+					Nascita: encrypt(form_data.get('nascita')),
+					Telefono: encrypt(form_data.get('telefono'))
 				}
 			});
 

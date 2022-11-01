@@ -7,7 +7,7 @@
 	onMount(() => {
 		if (form?.success && form != null) {
 			dialogs
-				.alert('Account registrato correttamente')
+				.alert('Password cambiata correttamente')
 				.then(() => (location.href = '/ecommerce/login'));
 		} else if (form != null) {
 			dialogs.alert("Errore durante la creazione dell'account, " + form.message);

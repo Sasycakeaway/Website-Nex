@@ -12,9 +12,9 @@ model Utente {
   Password         String
   Timestamp        DateTime           @default(now())
   News             Boolean
-  CF               String
-  Nascita          String
-  Telefono         String
+  CF               String   @db.VarChar(256)
+  Nascita          String   @db.VarChar(256)
+  Telefono         String   @db.VarChar(256)
   Newsletter       Newsletter[]
   RecoveryPassword RecoveryPassword[]
   Ordini    Ordini[]
@@ -30,8 +30,8 @@ model Ordini {
   Timestamp DateTime @default(now())
   Nome      String
   Cognome   String
-  Indirizzo String
-  Cap       String
+  Indirizzo String  @db.VarChar(256)
+  Cap       String  @db.VarChar(256)
   Domicilio Boolean
 }
 
