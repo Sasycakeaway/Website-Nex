@@ -87,9 +87,10 @@
 						<li class="uk-parent">
 							<ul uk-accordion>
 								<li>
-									<a href="#">I miei prodotti</a>
-									<div class="uk-navbar-dropdown but">
-										<ul class="uk-nav uk-navbar-dropdown-nav">
+									<a class="uk-accordion-title" href="#0" style="color:black;"
+									>I miei prodotti</a>
+									<div class="uk-accordion-content">
+										<ul class="uk-nav-sub">
 											<li><a href="/apebox">Apebox</a></li>
 											<li><a href="/decorati">Biscotti decorati</a></li>
 											{#each types as type}
@@ -104,7 +105,8 @@
 										</ul>
 									</div>
 								</li>
-								<li><a href="/gallery">Galleria fotografica</a></li>
+							</ul>
+								<li><a href="/gallery" style="background-color:white" >Galleria fotografica</a></li>
 								<li><a href="/contatti">Contatti</a></li>
 								<li><a href="/ingredienti">Elenco ingredienti</a></li>
 								<li><a href="/ecommerce/login/">Login</a></li>
@@ -117,8 +119,6 @@
 										/></a
 									>
 								</li>
-							</ul>
-						</li>
 					</ul>
 				</div>
 			</div>
@@ -141,5 +141,9 @@
 	}
 	.uk-nav > li > a {
 		color: black;
+	}
+	.uk-accordion-title{
+		font-size: 1em;
+		line-height: 0;
 	}
 </style>
