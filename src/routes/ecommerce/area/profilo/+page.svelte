@@ -1,18 +1,16 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { decrypt } from '$lib/crypto/aes';
 
 	let email: String, cf: String, nascita: String, telefono: String;
 
 	/** @type {import('./$types').PageData} */
-	export let data: Data;
+	export let data: User;
 
 	onMount(async () => {
-		const user: User = data.user;
-		email = user.PK_Email;
-		cf = decrypt(user.CF);
-		nascita = decrypt(user.Nascita);
-		telefono = decrypt(user.Telefono);
+		email = data.PK_Email;
+		cf = data.CF;
+		nascita = data.Nascita;
+		telefono = data.Telefono;
 	});
 </script>
 

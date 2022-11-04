@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
+import { decrypt } from '$lib/crypto/aes';
 
 const prisma = new PrismaClient();
 
@@ -22,5 +23,5 @@ export const load: PageServerLoad = async ({ cookies }) => {
 	if (user == null) {
 		throw error(401, 'Non sei autorizzato ad accedere a questa pagina'); // L'utente non è autorizzato
 	}
-	return { user: user };
+	return { Pk_Email: user.PK_Email, CF: decrypt(user.CF), Nascita: decrypt(user.Nascita), Telefono: decrypt(user.Telefono) };
 };
