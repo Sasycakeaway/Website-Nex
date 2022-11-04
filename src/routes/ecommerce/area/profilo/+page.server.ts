@@ -23,5 +23,5 @@ export const load: PageServerLoad = async ({ cookies }) => {
 	if (user == null) {
 		throw error(401, 'Non sei autorizzato ad accedere a questa pagina'); // L'utente non è autorizzato
 	}
-	return { Pk_Email: user.PK_Email, CF: decrypt(user.CF), Nascita: decrypt(user.Nascita), Telefono: decrypt(user.Telefono) };
+	return { Pk_Email: email, CF: decrypt(user.CF), Nascita: decrypt(user.Nascita), Telefono: decrypt(user.Telefono) };
 };
