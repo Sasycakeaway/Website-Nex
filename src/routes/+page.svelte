@@ -31,6 +31,8 @@
 			mobile = true;
 			document.getElementById('ifname').style.width = '300px';
 			document.getElementById('ifname').style.height = '200px';
+			document.getElementById('comitato')?.classList.remove('comitato');
+			document.getElementById('comitato')?.classList.add('comitato_mobile');
 		}
 	});
 </script>
@@ -40,6 +42,11 @@
 	<link rel="stylesheet" href="/css/index.css" />
 	<link rel="stylesheet" href="https://unpkg.com/purecss@2.1.0/build/grids-min.css" />
 	<link rel="stylesheet" href="https://unpkg.com/purecss@2.1.0/build/grids-responsive-min.css" />
+	<style>
+		.comitato_mobile {	/**Container del comitato per telefono*/
+			margin: 50px;
+		}
+	</style>
 </svelte:head>
 <SvelteSeo
 	jsonLd={{
@@ -106,9 +113,24 @@
 	<Prod />
 </div>
 <br />
+<div class="uk-card uk-card-default but cardc comitato" id="comitato">
+	<div class="center">
+		<img
+			class="comitato_image"
+			src="https://scontent.ftrn3-2.fna.fbcdn.net/v/t39.30808-6/280360428_1810610322467318_8140006914084730320_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=340051&_nc_ohc=ItN0nJmGhVMAX_uhhIi&_nc_ht=scontent.ftrn3-2.fna&oh=00_AfCA_1GlC3sETf195xN8UTiceKXEKUu25ybNqs0hZ68jMg&oe=63902C5C"
+			alt="comitato_logo"
+		/>
+		<p class="comitato_text">
+			Il Comitato Mahmud nasce nel 2014 per aiutare i bambini più in difficoltà nel mondo.
+			Quest'anno abbiamo sostenuto una casa famiglia ucraina ospitata vicino a Torino e stiamo
+			sostenendo un campo in Siria, a Idlib con cibo tutti i mesi e attività per bambini e bambine.
+		</p>
+	</div>
+</div>
 <div align="center">
 	<a href="/all_prod">
-		<button class="uk-button uk-button-primary uk-button-large but">Scopri i nostri prodotti</button>
+		<button class="uk-button uk-button-primary uk-button-large but">Scopri i nostri prodotti</button
+		>
 	</a>
 	<p class="info">
 		Per prenotazioni ed ordini chiama il 333/9273367 oppure scrivi a Sasy.vitrani@gmail.com
@@ -133,3 +155,20 @@
 	<a> www.radioveronicaone.it</a> - <a>www.radiolivesocial.it</a>
 </div>
 <br />
+
+<style>
+	.comitato {
+		margin: 50px 150px 50px 150px;
+		text-align: center;
+	}
+	.comitato_image {
+		padding: 20px;
+		border-radius: 30px;
+	}
+	.comitato_text {
+		font-size: 20px;
+		font-family: 'Poppins', sans-serif;
+		font-weight: 600;
+		padding: 20px;
+	}
+</style>
