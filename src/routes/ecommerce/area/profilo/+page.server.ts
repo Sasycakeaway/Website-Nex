@@ -21,7 +21,7 @@ export const load: PageServerLoad = async ({ cookies }) => {
 	});
 
 	if (user == null) {
-		throw error(401, 'Non sei autorizzato ad accedere a questa pagina'); // L'utente non è autorizzato
+		throw error(401, 'Non sei autorizzato ad accedere a questa pagina, per favore accedi con il tuo account'); // L'utente non è autorizzato
 	}
 	return { Pk_Email: email, CF: decrypt(user.CF), Nascita: decrypt(user.Nascita), Telefono: decrypt(user.Telefono) };
 };
