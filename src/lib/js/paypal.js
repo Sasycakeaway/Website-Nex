@@ -2,7 +2,7 @@ import { dialogs } from 'svelte-dialogs';
 import { v4 as uuidv4 } from 'uuid';
 import emailjs from '@emailjs/browser';
 
-function putorder(nome, cognome, indirizzo, cap, domicilio, email, cart, totale, cittavar) {
+function putorder(nome, cognome, indirizzo, cap, domicilio, email, cart, totale, cittavar, spedizione) {
 	let id = uuidv4();
 	var myHeaders = new Headers();
 	myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
@@ -18,6 +18,7 @@ function putorder(nome, cognome, indirizzo, cap, domicilio, email, cart, totale,
 	urlencoded.append('totale', totale);
 	urlencoded.append('cart', cart);
 	urlencoded.append('email', email);
+	urlencoded.append('spedizione', spedizione);
 
 	var requestOptions = {
 		method: 'POST',
@@ -67,46 +68,41 @@ export async function init(
 	domicilio,
 	email,
 	cart,
-	cittavar
+	cittavar,
+	spedizione
 ) {
 	emailjs.init('XI3aGphpOi4C1--qr');
-	console.log(totale);
+
+	if (spedizione)	// Se i prodotti vengono spediti dobbiamo aggiungere 8 euro
+		totale = (parseInt(totale) + 8).toString();
+
 	try {
-		await paypal_sdk
-			.Buttons({
-				createOrder: function (data, actions) {
-					return actions.order.create({
-						purchase_units: [
-							{
-								amount: {
-									value: totale
-								}
+		await paypal_sdk.Buttons({
+			createOrder: function (data, actions) {
+				return actions.order.create({
+					purchase_units: [
+						{
+							amount: {
+								value: totale
 							}
-						]
-					});
-				},
-				onApprove: function (data, actions) {
-					console.log('approve');
-					return actions.order.capture().then(async function (details) {
-						putorder(nome, cognome, indirizzo, cap, domicilio, email, cart, totale, cittavar);
-					});
-				},
-				onError: function (err) {
-					dialogs.alert(
-						"Errore durante la registrazione dell'ordine, contattarci, fornendo i dettagli del pagamento per richiedere il rimborso"
-					);
-				}
-			})
+						}
+					]
+				});
+			},
+			onApprove: function (data, actions) {
+				console.log('approve');
+				return actions.order.capture().then(async function (details) {
+					putorder(nome, cognome, indirizzo, cap, domicilio, email, cart, totale, cittavar, spedizione);
+				});
+			},
+			onError: function (err) {
+				dialogs.alert(
+					"Errore durante la registrazione dell'ordine, contattarci, fornendo i dettagli del pagamento per richiedere il rimborso"
+				);
+			}
+		})
 			.render('#paypal');
 	} catch (error) {
 		console.error('failed to render the PayPal Buttons', error);
-		// location.href= "/ecommerce/pagamenti";
 	}
 }
-
-// export function getvariable(username, password, ordinipass, ordineora) {
-// 	user = username;
-// 	password = pass;
-// 	newordini = ordinipass;
-// 	newordini.push(ordineora);
-// }

@@ -47,7 +47,8 @@ export const actions = {
 					Domicilio: domicilio,
 					Totale: parseInt(form_data.get('totale')),
 					Cart: form_data.get('cart'),
-					Timestamp: new Date()
+					Timestamp: new Date(),
+					Spedizione: form_data.get('spedizione')
 				}
 			});
 			return { success: true };

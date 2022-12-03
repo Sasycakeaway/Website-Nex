@@ -33,6 +33,7 @@ model Ordini {
   Indirizzo String  @db.VarChar(256)
   Cap       String  @db.VarChar(256)
   Domicilio Boolean
+  Spedizione Boolean
 }
 
 model Newsletter {
