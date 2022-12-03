@@ -3,16 +3,18 @@
 	import { onMount } from 'svelte';
 	import { GooglePlacesAutocomplete } from '@beyonk/svelte-googlemaps';
 	import { json } from '@sveltejs/kit';
+	import type { Sql } from '@prisma/client/runtime';
 	//import google from 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBomQdV10KKTb45y-uIXWl-ZlFgyEOxcsc&libraries=places&callback=initMap'
 	let nome: string,
 		cognome: string,
 		indirizzo: string,
 		cap: string,
-		domicilio = false,
+		domicilio: boolean = false,
 		totale: string | null,
 		cart: string | null,
 		cittavar: string,
-		email: string;
+		email: string,
+		spedizione: boolean = false;
 
 	/** @type {import('./$types').PageData} */
 	export let data;
@@ -30,7 +32,16 @@
 			if (cart != null) json_cart = JSON.parse(cart);
 
 			for (let i = 0; i < json_cart.length; i++) {
-				json_cart[i].image = ''; // Sanitize the image property in DB
+				json_cart[i].image = ''; // Sanitize the image property for DB
+			}
+
+			const dom = document.getElementById("domicilio");	// Sveltekit don't support bind:checked for checkbox so we need to use vanilla JS
+			const sped = document.getElementById("spedizione");
+			if(dom instanceof HTMLInputElement && sped instanceof HTMLInputElement){
+				if(dom.checked)
+					domicilio = true;
+				if(sped.checked)
+					spedizione = true;
 			}
 
 			init(
@@ -42,7 +53,8 @@
 				domicilio,
 				email,
 				JSON.stringify(json_cart),
-				cittavar
+				cittavar,
+				spedizione
 			);
 			document.getElementById('conf').style.visibility = 'hidden';
 		} else alert('Compila tutti i campi richiesti');
@@ -101,14 +113,12 @@
 			<input class="uk-input" type="text" placeholder="CAP" name="cap" bind:value={cap} />
 			<br />
 			<br />
-			<input type="checkbox" id="domicilio" name="domicilio" bind:checked={domicilio} />
-			<label for="domicilio"
-				>Consegna a domicilio o spedizione se l'indirizzo di consegna è fuori dal Piemonte</label
-			>
-			<br />
+			  <input type="radio" id="spedizione" name="domicilio" value="spedizione">
+			  <label for="css">Spedizione se l'indirizzo è fuori dal Piemonte(costo spedizione 8 euro)</label><br>
+			  <input type="radio" id="domicilio" name="domicilio" value="domicilio">
+			  <label for="domicilio">Consegna a domicilio</label><br>
 			<br />
 		</div>
-		<div align="center" />
 	</form>
 </div>
 <div align="center" id="conf">

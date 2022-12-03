@@ -20,7 +20,7 @@ export const load: PageServerLoad = async ({ cookies }) => {
 	});
 
 	if (user == null) {
-		throw error(401, 'Non sei autorizzato ad accedere a questa pagina'); // L'utente non è autorizzato
+		throw error(401, 'Non sei autorizzato ad accedere a questa pagina, per favore accedi con il tuo account'); // L'utente non è autorizzato
 	}
 
 	const orders = await prisma.ordini.findMany({

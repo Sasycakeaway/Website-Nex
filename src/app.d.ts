@@ -61,6 +61,22 @@ declare interface Prodotto {
 	buyPhrase: string;
 }
 
+declare interface Prod{
+	prodottoName: string;
+	description: string;
+	image: string;
+	shortDescription: string;
+	citazione: string;
+	is_single_page: boolean;
+	gallery: Array<string>;
+	buyable: boolean;
+	price: number;
+	buyPhrase: string;
+}
+declare interface Prodotto_Raw {
+	fields: Prod
+}
+
 
 declare interface FromForm {
 	prod: string;

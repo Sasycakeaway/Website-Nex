@@ -11,7 +11,7 @@ export const load: PageServerLoad = async ({ cookies }) => {
 	const email = cookies.get('email');
 
 	if (session == null && email == null) {
-		throw error(401, 'Non sei autorizzato ad accedere a questa pagina'); // L'utente non è autorizzato
+		throw error(401, 'Non sei autorizzato ad accedere a questa pagina, per favore accedi con il tuo account'); // L'utente non è autorizzato
 	}
 
 	const user = await prisma.utente.findFirst({
@@ -21,7 +21,7 @@ export const load: PageServerLoad = async ({ cookies }) => {
 		}
 	});
 	if (user == undefined) {
-		throw error(401, 'Non sei autorizzato ad accedere a questa pagina'); // L'utente non è autorizzato
+		throw error(401, 'Non sei autorizzato ad accedere a questa pagina, per favore accedi con il tuo account'); // L'utente non è autorizzato
 	}
 	return { email: email };
 };
@@ -47,7 +47,8 @@ export const actions = {
 					Domicilio: domicilio,
 					Totale: parseInt(form_data.get('totale')),
 					Cart: form_data.get('cart'),
-					Timestamp: new Date()
+					Timestamp: new Date(),
+					Spedizione: form_data.get('spedizione')
 				}
 			});
 			return { success: true };

@@ -1,11 +1,13 @@
-<script>
+<script lang="ts">
 	import { initcart } from '$lib/js/cart';
 	import { onMount } from 'svelte';
 	import Stepper from '$lib/components/stepper.svelte';
+	import client from '$lib/js/contentfulClient';
 
 	let cart = [];
 	let verifica;
 	let totale;
+	let prods: Array<Prodotto_Raw> = [];
 
 	function removeall() {
 		cart = [];
@@ -23,136 +25,60 @@
 		}
 	}
 
-	onMount(() => {
+	onMount(async () => {
 		cart = initcart();
 		totale = localStorage.getItem('totale');
 		verifica = check();
+		const raw_prod = await client?.getEntries({
+			content_type: 'prodotti'
+		});
+		prods = raw_prod?.items;
 	});
 
 	async function min(e) {
-		console.log(cart[e.detail.text].id);
-		if (
-			cart[e.detail.text].id != 'Il trasformista' &&
-			cart[e.detail.text].id != 'Benvenuti al nord' &&
-			cart[e.detail.text].id != 'Benvenuti al sud' &&
-			cart[e.detail.text].id != 'Il vegetariano' &&
-			cart[e.detail.text].id != 'La grande abbuffata'
-		) {
-			cart[e.detail.text].prezzo -= 5;
+		totale = localStorage.getItem('totale');
+		const prodotto = prods.filter(
+			(prod_raw) => prod_raw.fields.prodottoName == cart[e.detail.text].id
+		); // Prendo il prodotto dal CMS
+		if (prodotto.length > 0) {
+			cart[e.detail.text].prezzo -= prodotto[0].fields.price;
 			cart[e.detail.text].qty--;
-			totale -= 5;
-		} else {
-			switch (cart[e.detail.text].id) {
-				case 'Benvenuti al nord':
-					cart[e.detail.text].prezzo -= 12;
-					cart[e.detail.text].qty--;
-					totale -= 12;
-					break;
-				case 'Il vegetariano':
-					cart[e.detail.text].prezzo -= 12;
-					cart[e.detail.text].qty--;
-					totale -= 12;
-					break;
-				case 'Il trasformista':
-					cart[e.detail.text].prezzo -= 18;
-					cart[e.detail.text].qty--;
-					totale -= 18;
-					break;
-				default:
-					cart[e.detail.text].prezzo -= 15;
-					cart[e.detail.text].qty--;
-					totale -= 15;
-					break;
-			}
-			//location.reload();
 		}
-		await localStorage.setItem('totale', totale.toString());
-		//location.reload();
 	}
 
 	function plu(e) {
-		console.log(cart[e.detail.text].id);
-		totale = parseInt(totale);
-		if (
-			cart[e.detail.text].id != 'Il trasformista' &&
-			cart[e.detail.text].id != 'Benvenuti al nord' &&
-			cart[e.detail.text].id != 'Benvenuti al sud' &&
-			cart[e.detail.text].id != 'Il vegetariano' &&
-			cart[e.detail.text].id != 'La grande abbuffata'
-		) {
-			cart[e.detail.text].prezzo += 5;
+		totale = localStorage.getItem('totale');
+		const prodotto = prods.filter(
+			(prod_raw) => prod_raw.fields.prodottoName == cart[e.detail.text].id
+		); // Prendo il prodotto dal CMS
+		if (prodotto.length > 0) {
+			cart[e.detail.text].prezzo += prodotto[0].fields.price;
 			cart[e.detail.text].qty++;
-
-			totale += 5;
-		} else {
-			switch (cart[e.detail.text].id) {
-				case 'Benvenuti al nord':
-					cart[e.detail.text].qty++;
-					cart[e.detail.text].prezzo += 12;
-					totale += 12;
-					break;
-				case 'Il vegetariano':
-					cart[e.detail.text].qty++;
-					cart[e.detail.text].prezzo += 12;
-					totale += 12;
-					break;
-				case 'Il trasformista':
-					cart[e.detail.text].qty++;
-					cart[e.detail.text].prezzo += 18;
-					totale += 18;
-					break;
-				default:
-					cart[e.detail.text].qty++;
-					cart[e.detail.text].prezzo += 15;
-					totale += 15;
-					break;
-			}
-			//location.reload();
 		}
-		// localStorage.setItem("cart", JSON.stringify(cart));
-		// localStorage.setItem("totale", totale.toString());
 	}
 
 	function bin(e) {
 		let temp;
+
+		totale = localStorage.getItem('totale');
+
 		cart.forEach((prod, i) => {
 			if (prod.id == e) {
 				temp = i;
 			}
 		});
-		if (
-			e != 'Il trasformista' &&
-			e != 'Benvenuti al nord' &&
-			e != 'Benvenuti al sud' &&
-			e != 'Il vegetariano' &&
-			e != 'La grande abbuffata'
-		)
-			totale -= cart[temp].prezzo;
-		else {
-			switch (e) {
-				case 'Benvenuti al nord':
-					totale -= cart[temp].prezzo;
-					break;
-				case 'Il vegetariano':
-					totale -= cart[temp].prezzo;
-					break;
-				case 'Il trasformista':
-					totale -= 18;
-					break;
-				default:
-					totale -= cart[temp].prezzo;
-					break;
-			}
+
+		const prodotto = prods.filter((prod_raw) => prod_raw.fields.prodottoName == e); // Prendo il prodotto dal CMS
+		if (prodotto.length > 0) {
+			totale -= prodotto[0].fields.price;
 		}
 
 		cart = cart.filter((prod) => prod.id != e);
 
 		localStorage.setItem('cart', JSON.stringify(cart));
 		localStorage.setItem('totale', totale.toString());
-		document.getElementById(e + 'item');
-		location.reload();
+
 	}
-	let itemSize = 300;
 </script>
 
 <svelte:head>

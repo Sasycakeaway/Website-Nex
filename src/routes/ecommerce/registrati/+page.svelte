@@ -20,15 +20,15 @@
 			if (form.success && form != null) {
 				emailjs.init('tfSXJVz0VLhWR2I_5');
 				loading = true;
+				dialogs
+					.alert('Account registrato correttamente')
+					.then(() => (location.href = '/ecommerce/login'));
 				await emailjs.send('service_s11ial4', 'template_4x1knko', {
 					email: form.email,
 					newsremove:
 						'Se ti fossi iscritto alla newsletter e vuoi rimuoverti clicca questo link: ' +
 						`https://sasycakeaway.com/newsletter/${form.email}/${form.newsremove}`
 				});
-				dialogs
-					.alert('Account registrato correttamente')
-					.then(() => (location.href = '/ecommerce/login'));
 			} else if (form != null) {
 				dialogs.alert("Errore durante la creazione dell'account, " + form.message);
 			}

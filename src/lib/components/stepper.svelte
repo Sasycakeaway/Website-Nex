@@ -1,99 +1,64 @@
-<script>
+<script lang="ts">
 	export let qty;
-	export let prod;
+	export let prod: string;
 	import { initcart } from '../js/cart';
 	import { dialogs } from 'svelte-dialogs';
 	import { onMount } from 'svelte';
 	import { createEventDispatcher } from 'svelte';
+	import client from '$lib/js/contentfulClient';
 
 	const dispatch = createEventDispatcher();
-
+	let prods: Array<Prodotto_Raw> = [];
 	let cart = [];
 	let totale;
 	export let ida;
 
-	onMount(() => {
+	onMount(async () => {
 		cart = initcart();
 		totale = localStorage.getItem('totale');
+		const raw_prod = await client?.getEntries({
+			content_type: 'prodotti'
+		});
+		prods = raw_prod?.items;
 	});
 
 	function minus(e) {
 		cart.forEach(async (value, i) => {
 			if (value.id == prod) {
+				// Il prodotto esiste
 				if (value.qty > 1) {
+					// Il prodotto non è l'ultimo
 					cart[i].qty--;
-					if (
-						prod != 'Il trasformista' &&
-						prod != 'Benvenuti al nord' &&
-						prod != 'Benvenuti al sud' &&
-						prod != 'Il vegetariano' &&
-						prod != 'La grande abbuffata'
-					) {
-						cart[i].prezzo -= 5;
-						totale -= 5;
-					} else {
-						switch (cart[i].id) {
-							case 'Benvenuti al nord':
-								cart[i].prezzo -= 12;
-								totale -= 12;
-								break;
-							case 'Il vegetariano':
-								cart[i].prezzo -= 12;
-								totale -= 12;
-								break;
-							case 'Il trasformista':
-								cart[i].prezzo -= 18;
-								totale -= 18;
-								break;
-							default:
-								totale -= 15;
-								cart[i].prezzo -= 15;
-								break;
-						}
-					}
-					qty--;
-					dispatch('minus', {
-						text: ida
-					});
-				} else {
-					let resp = await dialogs.confirm('Vuoi eliminare il prodotto?');
-					if (resp) {
-						// document.getElementById(e + "item").removeChild();
-						if (
-							prod != 'Il trasformista' &&
-							prod != 'Benvenuti al nord' &&
-							prod != 'Benvenuti al sud' &&
-							prod != 'Il vegetariano' &&
-							prod != 'La grande abbuffata'
-						) {
-							cart[i].prezzo -= 5;
-							totale -= 5;
-						} else {
-							switch (cart[i].id) {
-								case 'Benvenuti al nord':
-									cart[i].prezzo -= 12;
-									totale -= 12;
-									break;
-								case 'Il vegetariano':
-									cart[i].prezzo -= 12;
-									totale -= 12;
-									break;
-								case 'Il trasformista':
-									cart[i].prezzo -= 18;
-									totale -= 18;
-									break;
-								default:
-									totale -= 15;
-									cart[i].prezzo -= 15;
-									break;
-							}
-						}
-						cart.splice(i, 1);
+					const prodotto = prods.filter((prod_raw) => prod_raw.fields.prodottoName == prod); // Prendo il prodotto dal CMS
+					if (prodotto.length > 0) {
+						// Il prodotto esiste nel CMS
+						cart[i].prezzo -= prodotto[0].fields.price;
+						totale = prodotto[0].fields.price;
+						qty--;
+
+						localStorage.setItem('cart', JSON.stringify(cart));
+						localStorage.setItem('totale', totale);
+
 						dispatch('minus', {
 							text: ida
 						});
+					} else dialogs.alert('Errore durante la rimozione del prodotto');
+				} else {
+					let resp = await dialogs.confirm('Vuoi eliminare il prodotto?');
+					if (resp) {
+						const prodotto = prods.filter((prod_raw) => prod_raw.fields.prodottoName == prod); // Prendo il prodotto dal CMS
+						if (prodotto.length > 0) {
+							// Il prodotto esiste nel CMS
+							cart[i].prezzo -= prodotto[0].fields.price;
+							totale -= prodotto[0].fields.price;
+							cart.splice(i, 1);
+							dispatch('minus', {
+								text: ida
+							});
+						} else dialogs.alert('Errore durante la rimozione del prodotto');
 					}
 					localStorage.setItem('cart', JSON.stringify(cart));
+					localStorage.setItem('totale', totale);
 					location.reload();
 				}
 			}
@@ -103,11 +68,16 @@
 	function plus(e) {
 		cart.forEach((value, i) => {
 			if (value.id == prod) {
-				cart[i].qty++;
-				qty++;
+				const prodotto = prods.filter((prod_raw) => prod_raw.fields.prodottoName == prod); // Prendo il prodotto dal CMS
 				totale = parseInt(totale);
-				totale += 5;
-				console.log(typeof totale);
+
+				if (prodotto.length > 0) {
+					cart[i].qty++;
+					qty++;
+					cart[i].prezzo += prodotto[0].fields.price;
+					totale += prodotto[0].fields.price;
+				} else dialogs.alert("Errore durante l'aggiunta del prodotto");
+
 				localStorage.setItem('cart', JSON.stringify(cart));
 				localStorage.setItem('totale', totale);
 				dispatch('plus', {
@@ -116,7 +86,6 @@
 			}
 		});
 	}
-	let itemSize = 300;
 </script>
 
 <svelte:head>
