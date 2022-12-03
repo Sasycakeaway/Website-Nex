@@ -35,6 +35,8 @@
 
 <svelte:head>
 	<link rel="stylesheet" href="/css/footer.css" />
+	<link rel="stylesheet" href="//unpkg.com/@beyonk/gdpr-cookie-consent-banner/dist/style.css">
+
 </svelte:head>
 
 <Header />

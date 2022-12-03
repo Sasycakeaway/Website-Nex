@@ -169,15 +169,17 @@
 				</div>
 			</div>
 			<div class="cookieConsent__Right">
-				<button
-					type="button"
-					class="cookieConsent__Button"
-					on:click={() => {
-						settingsShown = true;
-					}}
-				>
-					{settingsLabel}
-				</button>
+				{#if !/Android|webOS|iPhone|iPad|iPod|Opera Mini/i.test(navigator.userAgent)}
+					<button
+						type="button"
+						class="cookieConsent__Button"
+						on:click={() => {
+							settingsShown = true;
+						}}
+					>
+						{settingsLabel}
+					</button>
+				{/if}
 				<button type="submit" class="cookieConsent__Button" on:click={reject}>
 					{rejectLabel}
 				</button>
