@@ -119,6 +119,7 @@
 			class="comitato_image"
 			src="https://scontent.ftrn3-2.fna.fbcdn.net/v/t39.30808-6/280360428_1810610322467318_8140006914084730320_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=340051&_nc_ohc=ItN0nJmGhVMAX_uhhIi&_nc_ht=scontent.ftrn3-2.fna&oh=00_AfCA_1GlC3sETf195xN8UTiceKXEKUu25ybNqs0hZ68jMg&oe=63902C5C"
 			alt="comitato_logo"
+			width="700"
 		/>
 		<p class="comitato_text">
 			Il Comitato Mahmud nasce nel 2014 per aiutare i bambini più in difficoltà nel mondo.
