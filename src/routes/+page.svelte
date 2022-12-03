@@ -43,7 +43,8 @@
 	<link rel="stylesheet" href="https://unpkg.com/purecss@2.1.0/build/grids-min.css" />
 	<link rel="stylesheet" href="https://unpkg.com/purecss@2.1.0/build/grids-responsive-min.css" />
 	<style>
-		.comitato_mobile {	/**Container del comitato per telefono*/
+		.comitato_mobile {
+			/**Container del comitato per telefono*/
 			margin: 50px;
 		}
 	</style>
@@ -115,17 +116,30 @@
 <br />
 <div class="uk-card uk-card-default but cardc comitato" id="comitato">
 	<div class="center">
-		<img
-			class="comitato_image"
-			src="https://scontent.ftrn3-2.fna.fbcdn.net/v/t39.30808-6/280360428_1810610322467318_8140006914084730320_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=340051&_nc_ohc=ItN0nJmGhVMAX_uhhIi&_nc_ht=scontent.ftrn3-2.fna&oh=00_AfCA_1GlC3sETf195xN8UTiceKXEKUu25ybNqs0hZ68jMg&oe=63902C5C"
-			alt="comitato_logo"
-			width="700"
-		/>
+		<img class="comitato_image" src="/images/box_natale.jpeg" alt="comitato_logo" width="700" />
+		<div style="text-align:center">
 		<p class="comitato_text">
-			Il Comitato Mahmud nasce nel 2014 per aiutare i bambini più in difficoltà nel mondo.
-			Quest'anno abbiamo sostenuto una casa famiglia ucraina ospitata vicino a Torino e stiamo
-			sostenendo un campo in Siria, a Idlib con cibo tutti i mesi e attività per bambini e bambine.
+			Per questo natale scegli il nostro box colazione Santa Klaus. E' un regalo solidale a supporto
+			delle iniziative del Comitato Mahmud, aiutando così i bambini siriani e ucraini che stanno
+			vivendo in condizione estreme. All'interno troverete un sacchetto di krumiri ( o melighe o
+			nocciolotti a scelta) è un preparato homemade per 250 ml di cioccolata calda (dovrete
+			aggiungere solo il latte e troverete le indicazioni circa la preparazione)
 		</p>
+		
+			<img
+				src="/images/comitato_logo.jpg"
+				alt="Logo comitato"
+				width="256px"
+				class="comitato_image"
+			/>
+
+			<p class="comitato_text">
+				Il Comitato Mahmud nasce nel 2014 per aiutare i bambini più in difficoltà nel mondo.
+				Quest'anno abbiamo sostenuto una casa famiglia ucraina ospitata vicino a Torino e stiamo
+				sostenendo un campo in Siria, a Idlib con cibo tutti i mesi e attività per bambini e
+				bambine.
+			</p>
+		</div>
 	</div>
 </div>
 <div align="center">
